@@ -40,6 +40,7 @@ return [
 
     'categories_visits' => 'Collections Visits',
     'featured_visits' => 'Featured Visits',
+    'category_featured_visits' => 'Category Featured Visits',
     'vote_report' => 'Bookmark Report',
     'clicks_report' => 'Views Report',
     'top_level_clicks' => 'Top Level Clicks',

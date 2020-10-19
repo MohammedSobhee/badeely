@@ -40,6 +40,7 @@ return [
 
     'categories_visits' => 'مشاهدات الاقسام',
     'featured_visits' => 'مشاهدات الحسابات المميزة',
+    'category_featured_visits' => 'مشاهدات التصنيفات المميزة',
     'vote_report' => 'التصويات',
     'clicks_report' => 'تقرير المشاهدات',
     'top_level_clicks' => 'ضغطات الاقسام الرئيسية',

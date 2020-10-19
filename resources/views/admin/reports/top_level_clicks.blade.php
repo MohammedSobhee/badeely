@@ -103,9 +103,9 @@
                                     <div class="m-form__control">
                                         <div class="">
                                             <select id="target" name="target" class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type">
-                                                <option value="">@lang('inputs.all') ({{ \App\TopLevelView::count() }})</option>
+                                                <option value="">@lang('inputs.all') ({{ \App\TopLevelView::where('target','<>','top')->count() }})</option>
                                                 <option value="featured" {{ request('target') == 'featured' ? 'selected' : '' }}>Featured ({{ \App\TopLevelView::where('target', 'featured')->count() }})</option>
-                                                <option value="top" {{ request('target') == 'top' ? 'selected' : '' }}>Top ({{ \App\TopLevelView::where('target', 'top')->count() }})</option>
+{{--                                                <option value="top" {{ request('target') == 'top' ? 'selected' : '' }}>Top ({{ \App\TopLevelView::where('target', 'top')->count() }})</option>--}}
                                                 <option value="new" {{ request('target') == 'new' ? 'selected' : '' }}>New ({{ \App\TopLevelView::where('target', 'new')->count() }})</option>
                                             </select>
                                         </div>

@@ -25,6 +25,8 @@ return [
 
     /* CUSTOM */
 
+    'account_has_been_clicked' => 'تم عرض الحساب',
+    'category_has_been_clicked' => 'تم عرض التصنيف',
     'reset_password_email_has_been_sent' => 'تم إرسال بريد إلكتروني لاسترجاع كلمة المرور',
 
     'error_in_access_token' => 'مشكلة بالتوكن',

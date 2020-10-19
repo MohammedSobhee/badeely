@@ -45,6 +45,7 @@ Route::group(['middleware' => 'HttpsRedirect'], function () {
 
                 Route::get('/categories_visits', 'ReportsController@categoriesVisits')->name('categories_visits');
                 Route::get('/featured_visits', 'ReportsController@featuredVisits')->name('featured_visits');
+                Route::get('/category_featured_visits', 'ReportsController@categoryFeaturedVisits')->name('category_featured_visits');
                 Route::get('/vote_report', 'ReportsController@voteReport')->name('vote_report');
                 Route::get('/clicks_report', 'ReportsController@clicksReport')->name('clicks_report');
                 Route::get('/top_level_clicks', 'ReportsController@topLevelClicks')->name('top_level_clicks');

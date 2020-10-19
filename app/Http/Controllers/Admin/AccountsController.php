@@ -204,6 +204,7 @@ class AccountsController extends Controller
 
     public function update($id)
     {
+
         $account = Account::find($id);
         $account->mobile = request('mobile');
 
@@ -251,13 +252,14 @@ class AccountsController extends Controller
 
         $account->images = json_encode($images);
 
+
         $account->save();
 
         $account->touchTranslation(request('account_labels'), request('account_names'));
 
         $account->categories()->sync(request('categories'));
 
-        Account::setStatuses();
+//        Account::setStatuses();
 
         return back()->with('success', __('dashboard.edited'));
     }

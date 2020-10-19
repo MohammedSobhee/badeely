@@ -7,10 +7,12 @@ use App\Category;
 use App\CategoryCountry;
 use App\CategoryView;
 use App\Country;
+use App\FeatureCategory;
 use App\Http\Controllers\Controller;
 use App\Rate;
 use App\TopLevelView;
 use App\View;
+use App\ViewFeatureCategory;
 
 class ReportsController extends Controller
 {
@@ -61,6 +63,24 @@ class ReportsController extends Controller
 
         return view('admin.reports.featured_visits', [
             'accounts' => $accounts,
+            'count' => $count,
+        ]);
+    }
+
+    public function categoryFeaturedVisits()
+    {
+        $categories = FeatureCategory::orderByDesc('views')->get();
+
+        $views = new ViewFeatureCategory();
+        if (request('from') && request('to')) {
+            $views = $views->whereBetween('created_at', [request('from'), request('to')]);
+        }
+
+        $count = $views->count();
+        $count = ($count != 0) ? $count : 1;
+
+        return view('admin.reports.category_featured_visits', [
+            'categories' => $categories,
             'count' => $count,
         ]);
     }
@@ -137,7 +157,7 @@ class ReportsController extends Controller
 
     public function topLevelClicks()
     {
-        $views = new TopLevelView();
+        $views = TopLevelView::where('target', '<>', 'top');
 
         if (request('target')) {
             $views = $views->where('target', request('target'));

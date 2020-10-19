@@ -8,7 +8,7 @@
 
             <div class="d-flex align-items-center">
                 <div class="mr-auto">
-                    <h3 class="m-subheader__title m-subheader__title--separator"><?php echo app('translator')->getFromJson('pages.featured_visits'); ?></h3>
+                    <h3 class="m-subheader__title m-subheader__title--separator"><?php echo app('translator')->getFromJson('pages.top_level_clicks'); ?></h3>
                     <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                         <li class="m-nav__item m-nav__item--home">
                             <a href="<?php echo e(route('admin_home')); ?>" class="m-nav__link m-nav__link--icon">
@@ -17,7 +17,7 @@
                         </li>
                         <li class="m-nav__separator">-</li>
                         <li class="m-nav__item">
-                            <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.featured_visits'); ?></span>
+                            <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.top_level_clicks'); ?></span>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +49,7 @@
 
                             </span>
 
-                                <h3 class="m-portlet__head-text"><?php echo app('translator')->getFromJson('pages.featured_visits'); ?></h3>
+                                <h3 class="m-portlet__head-text"><?php echo app('translator')->getFromJson('pages.top_level_clicks'); ?></h3>
 
                             </div>
 
@@ -66,7 +66,7 @@
 
                         <form class="form-group m-form__group row align-items-center">
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="m-form__group m-form__group--inline">
                                     <div class="m-form__label">
                                         <label><?php echo app('translator')->getFromJson('inputs.from_date'); ?> :</label>
@@ -80,7 +80,7 @@
                                 <div class="d-md-none m--margin-bottom-10"></div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="m-form__group m-form__group--inline">
                                     <div class="m-form__label">
                                         <label><?php echo app('translator')->getFromJson('inputs.to_date'); ?> :</label>
@@ -94,10 +94,29 @@
                                 <div class="d-md-none m--margin-bottom-10"></div>
                             </div>
 
+                            <div class="col-md-2">
+                                <div class="m-form__group m-form__group--inline">
+                                    <div class="m-form__label">
+                                        <label><?php echo app('translator')->getFromJson('inputs.target'); ?> :</label>
+                                    </div>
+                                    <div class="m-form__control">
+                                        <div class="">
+                                            <select id="target" name="target" class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type">
+                                                <option value=""><?php echo app('translator')->getFromJson('inputs.all'); ?> (<?php echo e(\App\TopLevelView::where('target','<>','top')->count()); ?>)</option>
+                                                <option value="featured" <?php echo e(request('target') == 'featured' ? 'selected' : ''); ?>>Featured (<?php echo e(\App\TopLevelView::where('target', 'featured')->count()); ?>)</option>
+
+                                                <option value="new" <?php echo e(request('target') == 'new' ? 'selected' : ''); ?>>New (<?php echo e(\App\TopLevelView::where('target', 'new')->count()); ?>)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-md-none m--margin-bottom-10"></div>
+                            </div>
+
                             <div class="col-md-4">
                                 <br />
                                 <button type="submit" class="btn btn-warning m-btn--wide"><?php echo app('translator')->getFromJson('dashboard.show_result'); ?></button>
-                                <a href="<?php echo e(route('admin.reports.featured_visits')); ?>" class="btn btn-info m-btn--wide"><?php echo app('translator')->getFromJson('dashboard.show_all'); ?></a>
+                                <a href="<?php echo e(route('admin.reports.top_level_clicks')); ?>" class="btn btn-info m-btn--wide"><?php echo app('translator')->getFromJson('dashboard.show_all'); ?></a>
                             </div>
 
                             <hr>
@@ -112,11 +131,11 @@
 
                         <tr>
 
-                            <th><?php echo app('translator')->getFromJson('inputs.name'); ?></th>
+                            <th><?php echo app('translator')->getFromJson('inputs.target'); ?></th>
 
-                            <th><?php echo app('translator')->getFromJson('inputs.views'); ?></th>
+                            <th><?php echo app('translator')->getFromJson('inputs.user'); ?></th>
 
-                            <th><?php echo app('translator')->getFromJson('inputs.percentage'); ?></th>
+                            <th><?php echo app('translator')->getFromJson('inputs.created_at'); ?></th>
 
                         </tr>
 
@@ -125,22 +144,22 @@
                         <tbody class="m-datatable__body" style="">
 
 
-
-                        <?php $__currentLoopData = $accounts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $account): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $views; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $view): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                             <tr>
 
-                                <td><?php echo e($account->name); ?></td>
-
-                                <td><?php echo e($account->views()->betweenDate()->count()); ?></td>
+                                <td><?php echo e(ucfirst($view->target)); ?></td>
 
                                 <td>
-                                    <?php if($count): ?>
-                                        <?php echo e((float) number_format( ($account->views()->betweenDate()->count() / $count) * 100 , 2 , '.' , '' )); ?>%
+                                    <?php if($view->user): ?>
+                                        <a href="<?php echo e(route('admin.users.edit',$view->user->id)); ?>"><?php echo e($view->user->name); ?></a>
                                     <?php else: ?>
                                         <span>-</span>
                                     <?php endif; ?>
                                 </td>
+
+                                <td><?php echo e(date( 'd/m/Y - g:i A' , strtotime($view->created_at) )); ?></td>
+
 
                             </tr>
 
@@ -151,6 +170,8 @@
                         </tbody>
 
                     </table>
+
+                    <?php echo $views->appends(request()->input())->links(); ?>
 
 
 
@@ -184,4 +205,4 @@
     </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.admin',[ 'page'=> 'reports_and_analytics' ], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.admin',[ 'page'=> 'top_level_clicks' ], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

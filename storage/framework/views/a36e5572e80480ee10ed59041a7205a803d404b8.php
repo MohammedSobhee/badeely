@@ -8,7 +8,7 @@
 
             <div class="d-flex align-items-center">
                 <div class="mr-auto">
-                    <h3 class="m-subheader__title m-subheader__title--separator"><?php echo app('translator')->getFromJson('pages.featured_visits'); ?></h3>
+                    <h3 class="m-subheader__title m-subheader__title--separator"><?php echo app('translator')->getFromJson('pages.category_featured_visits'); ?></h3>
                     <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                         <li class="m-nav__item m-nav__item--home">
                             <a href="<?php echo e(route('admin_home')); ?>" class="m-nav__link m-nav__link--icon">
@@ -17,7 +17,7 @@
                         </li>
                         <li class="m-nav__separator">-</li>
                         <li class="m-nav__item">
-                            <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.featured_visits'); ?></span>
+                            <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.category_featured_visits'); ?></span>
                         </li>
                     </ul>
                 </div>
@@ -97,7 +97,7 @@
                             <div class="col-md-4">
                                 <br />
                                 <button type="submit" class="btn btn-warning m-btn--wide"><?php echo app('translator')->getFromJson('dashboard.show_result'); ?></button>
-                                <a href="<?php echo e(route('admin.reports.featured_visits')); ?>" class="btn btn-info m-btn--wide"><?php echo app('translator')->getFromJson('dashboard.show_all'); ?></a>
+                                <a href="<?php echo e(route('admin.reports.category_featured_visits')); ?>" class="btn btn-info m-btn--wide"><?php echo app('translator')->getFromJson('dashboard.show_all'); ?></a>
                             </div>
 
                             <hr>
@@ -126,17 +126,17 @@
 
 
 
-                        <?php $__currentLoopData = $accounts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $account): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                             <tr>
 
-                                <td><?php echo e($account->name); ?></td>
+                                <td><?php echo e($category->name); ?></td>
 
-                                <td><?php echo e($account->views()->betweenDate()->count()); ?></td>
+                                <td><?php echo e($category->views()->betweenDate()->count()); ?></td>
 
                                 <td>
-                                    <?php if($count): ?>
-                                        <?php echo e((float) number_format( ($account->views()->betweenDate()->count() / $count) * 100 , 2 , '.' , '' )); ?>%
+                                    <?php if($category): ?>
+                                        <?php echo e((float) number_format( ($category->views()->betweenDate()->count() / $count) * 100 , 2 , '.' , '' )); ?>%
                                     <?php else: ?>
                                         <span>-</span>
                                     <?php endif; ?>

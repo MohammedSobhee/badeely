@@ -75,6 +75,7 @@ class Menu
                 'subMenu' => [
                     ['name' => __('pages.categories_visits'), 'route' => 'admin.reports.categories_visits'],
                     ['name' => __('pages.featured_visits'), 'route' => 'admin.reports.featured_visits'],
+                    ['name' => __('pages.category_featured_visits'), 'route' => 'admin.reports.category_featured_visits'],
                     ['name' => __('pages.vote_report'), 'route' => 'admin.reports.vote_report'],
                     ['name' => __('pages.clicks_report'), 'route' => 'admin.reports.clicks_report'],
                     ['name' => __('pages.top_level_clicks'), 'route' => 'admin.reports.top_level_clicks'],

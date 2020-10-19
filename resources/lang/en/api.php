@@ -22,6 +22,9 @@ return [
 
     /* CUSTOM */
 
+    'account_has_been_clicked' => 'account has_been clicked',
+    'category_has_been_clicked' => 'category has been clicked',
+
     'reset_password_email_has_been_sent' => 'Reset password email has been sent',
 
     'error_in_access_token' => 'Error in access token',

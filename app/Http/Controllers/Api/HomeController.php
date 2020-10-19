@@ -79,7 +79,8 @@ class HomeController extends Controller
     public function topLevelClick()
     {
         $this->validator([
-            'target' => 'required|in:featured,top,new',
+//            'target' => 'required|in:featured,top,new',
+            'target' => 'required|in:featured,new',
         ]);
 
         TopLevelView::create([

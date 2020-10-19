@@ -235,7 +235,7 @@ class AccountsController extends Controller
     public function getAccountsByTag(Request $request)
     {
 
-        $accounts = Account::where('tags', 'LIKE', '%' . $request->get('tag') . '%')->paginate(20);
+        $accounts = Account::where('tags', 'LIKE', '%' . $request->get('tag') . '%')->where('status',1)->paginate(20);
         $data = $this->transformer(new AccountsTransformer(), $accounts)->collection();
 
         return $this->success($data)
