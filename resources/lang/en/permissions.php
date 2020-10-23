@@ -10,6 +10,11 @@ return [
     'settings' => 'Settings Management',
     'countries' => 'Countries Management',
     'search_history' => 'Search History Management',
+    'notifications' => 'Notifications',
+    'reports' => 'Reports',
+
+    'items' => 'Category Items',
+    'send' => 'Send',
 
     'index' => 'Home',
     'create' => 'Create',

@@ -26,7 +26,7 @@
                         <li class="m-nav__separator">-</li>
 
                         <li class="m-nav__item">
-                            <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.create_category'); ?></span>
+                            <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.edit_category'); ?></span>
                         </li>
 
                     </ul>
@@ -46,16 +46,21 @@
 								<span class="m-portlet__head-icon m--hide">
 								<i class="la la-gear"></i>
 								</span>
-                                    <h3 class="m-portlet__head-text"><?php echo app('translator')->getFromJson('pages.create_category'); ?></h3>
+                                    <h3 class="m-portlet__head-text"><?php echo app('translator')->getFromJson('pages.edit_category'); ?></h3>
                                 </div>
                             </div>
                         </div>
 
-                        <form class="m-form validation-form" method="post" action="<?php echo e(route('admin.categories.store')); ?>" enctype="multipart/form-data">
+                        <form class="m-form validation-form" method="post"
+                              action="<?php echo e(route('admin.categories.update',[ 'id' => $category->id ])); ?>"
+                              enctype="multipart/form-data">
                             <?php echo e(csrf_field()); ?>
+
+                            <?php echo e(method_field('PATCH')); ?>
 
 
                             <div class="m-portlet__body">
+
 
                                 <div class="languages-tabs">
 
@@ -63,7 +68,8 @@
                                         <ul class="nav nav-tabs">
                                             <?php $__currentLoopData = config('languages'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $code => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <li class="nav-item m-tabs__item">
-                                                    <a class="nav-link m-tabs__link <?php echo e($loop->first ? 'active':''); ?>" href="#tb-lang-<?php echo e($code); ?>" data-toggle="tab"><?php echo e($label); ?></a>
+                                                    <a class="nav-link m-tabs__link <?php echo e($loop->first ? 'active':''); ?>"
+                                                       href="#tb-lang-<?php echo e($code); ?>" data-toggle="tab"><?php echo e($label); ?></a>
                                                 </li>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
@@ -73,13 +79,19 @@
 
                                     <?php $__currentLoopData = config('languages'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $code => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <!-- content tab start -->
-                                            <div class="tab-pane <?php echo e($loop->first ? 'active':''); ?>" id="tb-lang-<?php echo e($code); ?>">
+                                            <div class="tab-pane <?php echo e($loop->first ? 'active':''); ?>"
+                                                 id="tb-lang-<?php echo e($code); ?>">
 
                                                 <div class="m-form__section m-form__section--first">
                                                     <div class="form-group m-form__group row">
-                                                        <label class="col-2 col-form-label" for="category_labels[<?php echo e($code); ?>]"><?php echo app('translator')->getFromJson('inputs.title'); ?> :</label>
+                                                        <label class="col-2 col-form-label"
+                                                               for="category_labels[<?php echo e($code); ?>]"><?php echo app('translator')->getFromJson('inputs.name'); ?>
+                                                            :</label>
                                                         <div class="col-10">
-                                                            <input type="text" id="category_labels[<?php echo e($code); ?>]" class="form-control m-input" name="category_labels[<?php echo e($code); ?>]" value="<?php echo e(old('category_labels.'.$code)); ?>">
+                                                            <input type="text" id="category_labels[<?php echo e($code); ?>]"
+                                                                   class="form-control m-input"
+                                                                   name="category_labels[<?php echo e($code); ?>]"
+                                                                   value="<?php echo e($category->name($code)); ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -95,25 +107,31 @@
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="parent_id"><?php echo app('translator')->getFromJson('inputs.parent'); ?> :</label>
+                                        <label class="col-2 col-form-label" for="parent_id"><?php echo app('translator')->getFromJson('inputs.parent'); ?>
+                                            :</label>
                                         <div class="col-10">
-                                            <select id="parent_id" name="parent_id" class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type">
-                                                 <option value="0"><?php echo app('translator')->getFromJson('inputs.without'); ?></option>
-                                                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($cat->id); ?>" <?php echo e($cat->id == request('cat_id') ? 'selected' : ''); ?>><?php echo e($cat->name); ?></option>
+                                            <select id="parent_id" name="parent_id"
+                                                    class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type">
+                                                <option value="0"><?php echo app('translator')->getFromJson('inputs.without'); ?></option>
+                                                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($cat->id); ?>" <?php echo e($cat->id == $category->parent_id ? 'selected' : ''); ?>><?php echo e($cat->name); ?></option>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
 
+
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label for="countries" class="col-2 col-form-label"><?php echo app('translator')->getFromJson('inputs.countries'); ?> :</label>
+                                        <label for="countries" class="col-2 col-form-label"><?php echo app('translator')->getFromJson('inputs.countries'); ?>
+                                            :</label>
                                         <div class="col-10">
-                                            <select id="countries" name="countries[]" class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type" multiple>
+                                            <select id="countries" name="countries[]"
+                                                    class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
+                                                    multiple>
                                                 <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($country->id); ?>"><?php echo e($country->name); ?></option>
+                                                    <option value="<?php echo e($country->id); ?>" <?php echo e(in_array($country->id,$categoryCountry) ? 'selected' : ''); ?>><?php echo e($country->name); ?></option>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
@@ -127,30 +145,33 @@
 										<span class="m-switch m-switch--lg m-switch--info m-switch--icon">
 												<label>
 						                        <input type="checkbox" id="status" name="status"
-                                                       value="1">
+                                                       value="1"
+                                                <?php echo e($category->status ? 'checked' : ''); ?>>
 						                        <span></span>
 						                        </label>
 						                    </span>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
                                         <label class="col-2 col-form-label" for="image"><?php echo app('translator')->getFromJson('inputs.image'); ?> :</label>
                                         <div class="col-10">
-                                            <img id="upload-pic" src="" class="img-responsive" width="500">
-                                            <input type="file" id="file-upload" name="image" class="form-control m-input">
+                                            <img id="upload-pic" src="<?php echo e($category->image()); ?>" class="img-responsive"
+                                                 width="500">
+                                            <input type="file" id="file-upload" name="image"
+                                                   class="form-control m-input">
                                         </div>
                                     </div>
                                 </div>
 
-                            </div>
 
+                            </div>
                             <div class="m-portlet__foot m-portlet__foot--fit">
                                 <div class="m-form__actions m-form__actions">
 
-                                    <button type="submit" class="btn btn-accent m-btn m-btn--air m-btn--custom"><?php echo app('translator')->getFromJson('dashboard.save'); ?></button>
+                                    <button type="submit"
+                                            class="btn btn-accent m-btn m-btn--air m-btn--custom"><?php echo app('translator')->getFromJson('dashboard.save'); ?></button>
 
                                 </div>
                             </div>
@@ -169,12 +190,12 @@
 <?php $__env->startSection('scripts'); ?>
 
     <script>
-        $("#file-upload").on('change', function(){
-            if(validFile(this)){
-                readURL(this,'#upload-pic');
+        $("#file-upload").on('change', function () {
+            if (validFile(this)) {
+                readURL(this, '#upload-pic');
             }
         });
     </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.admin',[ 'page'=> 'create_category' ], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.admin',[ 'page'=> 'edit_category' ], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

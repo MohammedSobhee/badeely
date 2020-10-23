@@ -13,6 +13,26 @@ return [
     | to have a conventional place to find your various credentials.
     |
     */
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_REDIRECT_URL'),
+    ],
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URL'),
+    ], 'twitter' => [
+        'client_id' => 'W9ba87LefPkhad1siNapDGaHD',
+        'client_secret' => 'T9xY6QiHOGPzHNds3srRQuGAgyrY5rDoT0NXF6ZBzAYtSxcmaC',
+        'redirect' => 'https://developers.google.com/oauthplayground',
+    ],
+    "apple" => [
+        "client_id" => env("APPLE_CLIENT_ID"),
+        "client_secret" => env("APPLE_CLIENT_SECRET"),
+        'redirect' => env('APPLE_REDIRECT_URL'),
+
+    ],
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -33,10 +53,12 @@ return [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
-    ],
-    'facebook' => [
-        'client_id' => '1876323382672084',
-        'client_secret' => 'c754120d6f49fdb057c044ae1ee94ddc',
-        'redirect' => 'http://cosette.araac.info/auth/facebook/callback',
-    ],
+    ]
 ];
+
+
+
+//FACEBOOK_CLIENT_ID=1876323382672084
+//FACEBOOK_CLIENT_SECRET=c754120d6f49fdb057c044ae1ee94ddc
+//FACEBOOK_REDIRECT_URL=http://cosette.araac.info/auth/facebook/callback
+

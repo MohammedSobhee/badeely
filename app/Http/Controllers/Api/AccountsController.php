@@ -14,8 +14,6 @@ class AccountsController extends Controller
 {
     public function index()
     {
-
-//        dd(config('country'));
         $accounts = Account::published()->where('country_id', config('country'));
 
         if (request('name')) {

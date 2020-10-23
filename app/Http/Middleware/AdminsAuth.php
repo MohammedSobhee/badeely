@@ -12,8 +12,8 @@ class AdminsAuth
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @param string $guard
      * @return mixed
      */
@@ -26,7 +26,7 @@ class AdminsAuth
     public function handle($request, Closure $next, $guard = 'admins')
     {
 
-        if(! Auth::guard($guard)->check()){
+        if (!Auth::guard($guard)->check()) {
             return redirect('admin/login');
         }
 
@@ -34,8 +34,8 @@ class AdminsAuth
 
         $route = $this->route(\Route::currentRouteName());
 
-        if($route &&!auth('admins')->user()->hasPermission($route)){
-            abort(403,'Permission denied !!');
+        if ($route && !auth('admins')->user()->hasPermission($route)) {
+            abort(403, 'Permission denied !!');
         }
 
         return $next($request);
@@ -55,15 +55,15 @@ class AdminsAuth
 
     private function route($route)
     {
-        $tmp = explode('.',$route);
+        $tmp = explode('.', $route);
         $verb = end($tmp);
 
-        if($verb == 'store'){
-            $route = lreplace('store','create', $route);
-            }elseif ($verb == 'update'){
-            $route = lreplace('update','edit',$route);
+        if ($verb == 'store') {
+            $route = lreplace('store', 'create', $route);
+        } elseif ($verb == 'update') {
+            $route = lreplace('update', 'edit', $route);
         }
 
-        return in_array($route,$this->exclude) ? null : $route;
+        return in_array($route, $this->exclude) ? null : $route;
     }
 }

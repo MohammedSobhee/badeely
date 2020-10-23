@@ -24,6 +24,7 @@ return [
 
 
     /* CUSTOM */
+    'notification_has_been_removed' => 'تم حذف الاشعار',
 
     'account_has_been_clicked' => 'تم عرض الحساب',
     'category_has_been_clicked' => 'تم عرض التصنيف',

@@ -4,30 +4,69 @@ namespace App\Http\Controllers\Api;
 
 use App\Api\Controller;
 use App\Category;
+use App\CategoryFollow;
 use App\CategoryView;
 use App\FeatureCategory;
 use App\Http\Transformer\CategoriesTransformer;
 use App\Http\Transformer\AccountsTransformer;
 use App\Account;
 use App\ViewFeatureCategory;
+use DB;
 
 class CategoriesController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('parent_id', 0)->orderBy('sort')
+        $all_categories = Category::where('parent_id', 0)->orderBy('sort')
             ->whereHas('countries', function ($q) {
                 $q->where('id', config('country'));
             })->where('status', 1)->get();
 
-        $categories = $this->transformer(new CategoriesTransformer(), $categories)->collection();
+        $all_categories = $this->transformer(new CategoriesTransformer(), $all_categories)->collection();
+
+        $my_follow_categories = [];
+        if (auth()->check()) {
+            $my_follow_categories = $this->user()->follows()->where('parent_id', 0)->orderBy('sort')
+                ->whereHas('countries', function ($q) {
+                    $q->where('id', config('country'));
+                })->where('status', 1)->get();
+
+            $my_follow_categories = $this->transformer(new CategoriesTransformer(), $my_follow_categories)->collection();
+        }
+
+
+        $settings = config('settings');
+        $new_categories = Category::where('parent_id', 0)->orderByDesc('id')
+            ->whereHas('countries', function ($q) {
+                $q->where('id', config('country'));
+            })->where('status', 1)->take($settings['new_collections_in_page'])->get();
+
+        $new_categories = $this->transformer(new CategoriesTransformer(), $new_categories)->collection();
+
+        $most_follows = CategoryFollow::select(['category_id', DB::raw('count(user_id) as total')])
+            ->groupBy('category_id')->orderByDesc('total')->pluck('category_id')->toArray();
+
+        $ids_most_follows = implode(',', $most_follows);
+
+        $most_follow_categories = Category::where('parent_id', 0)->orderByDesc('id')
+            ->whereHas('countries', function ($q) {
+                $q->where('id', config('country'));
+            })->where('status', 1)->whereIn('id', $most_follows)
+            ->orderByRaw("FIELD(id, $ids_most_follows)")
+            ->take($settings['followed_collections_in_page'])->get();
+
+        $most_follow_categories = $this->transformer(new CategoriesTransformer(), $most_follow_categories)->collection();
 
         $data = [
-            'items' => $categories,
+
             'featured' => [
                 'title' => config('settings.featured_title_' . app()->getLocale()),
                 'image' => url('/assets/featured_img.png') . '?time=' . time(),
             ],
+            'most_followed' => $most_follow_categories,
+            'new' => $new_categories,
+            'my_follow' => $my_follow_categories,
+            'all' => $all_categories,
         ];
 
         return $this->success($data)->data();

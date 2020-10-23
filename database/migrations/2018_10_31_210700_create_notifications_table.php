@@ -17,6 +17,10 @@ class CreateNotificationsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('content');
+            $table->enum('action',['account','collection'])->nullable();
+            $table->integer('category_id')->nullable();
+            $table->integer('action_id')->nullable();
+            $table->boolean('is_all')->default(false);
             $table->timestamps();
         });
     }

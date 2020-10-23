@@ -102,6 +102,10 @@ return [
     'accounts_in_page' => 'عدد الحسابات في الصفحة',
     'latest_accounts_last_days' => 'آخر الحسابات في آخر ايام',
 
+    'followed_collections_in_page' => 'عدد التصنيفات في الصفحة',
+    'new_collections_in_page' => 'عدد التصنيفات الجديدة',
+    'new_collections_from' => 'تاريخ بدء حساب عدد التصنيفات الجديدة',
+
 
     'send_notification' => 'إرسال إشعار',
     'send' => 'إرسال',
@@ -119,5 +123,9 @@ return [
     'featured_img' => 'صورة القسم',
 
     'target' => 'الهدف',
+    'items' => 'الحسابات|التصنيفات',
+    'notification_action_type' => 'النوع',
 
+    'account' => 'الحساب',
+    'collection' => 'التصنيف',
 ];

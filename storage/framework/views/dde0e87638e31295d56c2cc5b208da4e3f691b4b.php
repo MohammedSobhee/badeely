@@ -1,5 +1,4 @@
-@extends('layouts.admin',[ 'page'=> 'notifications' ])
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <div class="m-grid__item m-grid__item--fluid m-wrapper">
 
@@ -7,28 +6,28 @@
 
             <div class="d-flex align-items-center">
                 <div class="mr-auto">
-                    <h3 class="m-subheader__title m-subheader__title--separator">@lang('pages.notifications')</h3>
+                    <h3 class="m-subheader__title m-subheader__title--separator"><?php echo app('translator')->getFromJson('pages.notifications'); ?></h3>
                     <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                         <li class="m-nav__item m-nav__item--home">
-                            <a href="{{ route('admin_home') }}" class="m-nav__link m-nav__link--icon">
+                            <a href="<?php echo e(route('admin_home')); ?>" class="m-nav__link m-nav__link--icon">
                                 <i class="m-nav__link-icon la la-home"></i>
                             </a>
                         </li>
                         <li class="m-nav__separator">-</li>
                         <li class="m-nav__item">
-                            <span class="m-nav__link-text">@lang('pages.notifications')</span>
+                            <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.notifications'); ?></span>
                         </li>
                     </ul>
                 </div>
 
-                @can('admin.notifications.send')
+                <?php if (auth('admins')->user()->hasPermission('admin.notifications.send')): ?>
 
                     <div class="ml-auto m--align-right">
                         <a href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
                            data-toggle="modal" data-target="#send-modal">
                             <span>
                                 <i class="la la-send"></i>
-                                <span style="padding-right:5px"> @lang('inputs.send_notification') </span>
+                                <span style="padding-right:5px"> <?php echo app('translator')->getFromJson('inputs.send_notification'); ?> </span>
                             </span>
                         </a>
                     </div>
@@ -39,48 +38,49 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="send-modal-label">@lang('inputs.send_notification')</h5>
+                                    <h5 class="modal-title" id="send-modal-label"><?php echo app('translator')->getFromJson('inputs.send_notification'); ?></h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <form class="m-form validation-form" method="post"
-                                      action="{{ route('admin.notifications.send') }}">
-                                    {{ csrf_field() }}
+                                      action="<?php echo e(route('admin.notifications.send')); ?>">
+                                    <?php echo e(csrf_field()); ?>
+
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="title" class="col-form-label">@lang('inputs.title') :</label>
+                                            <label for="title" class="col-form-label"><?php echo app('translator')->getFromJson('inputs.title'); ?> :</label>
                                             <input type="text" class="form-control" name="title" id="title" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="title"
-                                                   class="col-form-label">@lang('inputs.followers_collection') :</label>
+                                                   class="col-form-label"><?php echo app('translator')->getFromJson('inputs.followers_collection'); ?> :</label>
 
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     name="followers_collection" id="followers_collection">
-                                                <option value="">@lang('inputs.all')</option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                                @endforeach
+                                                <option value=""><?php echo app('translator')->getFromJson('inputs.all'); ?></option>
+                                                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($category->id); ?>"><?php echo e($category->name); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="title"
-                                                   class="col-form-label">@lang('inputs.notification_action_type')
+                                                   class="col-form-label"><?php echo app('translator')->getFromJson('inputs.notification_action_type'); ?>
                                                 :</label>
 
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     name="action" id="action">
                                                 <option value=""></option>
-                                                <option value="account">@lang('inputs.account')</option>
-                                                <option value="collection">@lang('inputs.collection')</option>
+                                                <option value="account"><?php echo app('translator')->getFromJson('inputs.account'); ?></option>
+                                                <option value="collection"><?php echo app('translator')->getFromJson('inputs.collection'); ?></option>
                                             </select>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="title"
-                                                   class="col-form-label">@lang('inputs.items') :</label>
+                                                   class="col-form-label"><?php echo app('translator')->getFromJson('inputs.items'); ?> :</label>
 
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     name="action_id" id="action_id">
@@ -88,14 +88,14 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="content" class="col-form-label">@lang('inputs.content')
+                                            <label for="content" class="col-form-label"><?php echo app('translator')->getFromJson('inputs.content'); ?>
                                                 :</label>
                                             <textarea class="form-control" name="content" id="content" rows="6"
                                                       required></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">@lang('inputs.send')</button>
+                                        <button type="submit" class="btn btn-primary"><?php echo app('translator')->getFromJson('inputs.send'); ?></button>
                                     </div>
                                 </form>
                             </div>
@@ -103,7 +103,7 @@
                     </div>
 
 
-                @endcan
+                <?php endif; ?>
 
             </div>
         </div>
@@ -116,47 +116,50 @@
                         <thead class="thead-default">
                         <tr>
                             <th style="width: 10%">#</th>
-                            <th>@lang('inputs.title')</th>
-                            <th>@lang('inputs.content')</th>
-                            <th>@lang('inputs.category')</th>
-                            <th>@lang('inputs.notification_action_type')</th>
-                            <th>@lang('inputs.items')</th>
-                            <th>@lang('inputs.created_at')</th>
+                            <th><?php echo app('translator')->getFromJson('inputs.title'); ?></th>
+                            <th><?php echo app('translator')->getFromJson('inputs.content'); ?></th>
+                            <th><?php echo app('translator')->getFromJson('inputs.category'); ?></th>
+                            <th><?php echo app('translator')->getFromJson('inputs.notification_action_type'); ?></th>
+                            <th><?php echo app('translator')->getFromJson('inputs.items'); ?></th>
+                            <th><?php echo app('translator')->getFromJson('inputs.created_at'); ?></th>
                             <th style="width: 10%"></th>
                         </tr>
                         </thead>
                         <tbody class="m-datatable__body" style="">
-                        @foreach( $notifications as $notification )
+                        <?php $__currentLoopData = $notifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <th scope="row">{{ $notification->id }}</th>
-                                <td>{{ $notification->title }}</td>
-                                <td>{{ $notification->content }}</td>
-                                <td>{{ $notification->category }}</td>
-                                <td>{{ ucfirst($notification->action) }}</td>
-                                <td>{{ $notification->action_name }}</td>
-                                <td>{{ $notification->created_at->format('d/m/Y - h:i A') }}</td>
+                                <th scope="row"><?php echo e($notification->id); ?></th>
+                                <td><?php echo e($notification->title); ?></td>
+                                <td><?php echo e($notification->content); ?></td>
+                                <td><?php echo e($notification->category); ?></td>
+                                <td><?php echo e(ucfirst($notification->action)); ?></td>
+                                <td><?php echo e($notification->action_name); ?></td>
+                                <td><?php echo e($notification->created_at->format('d/m/Y - h:i A')); ?></td>
                                 <td>
 
-                                    @can('admin.notifications.destroy')
+                                    <?php if (auth('admins')->user()->hasPermission('admin.notifications.destroy')): ?>
                                         <form style="display: inline-block;"
-                                              action="{{ route('admin.notifications.destroy' , [ 'id' => $notification->id ] ) }}"
+                                              action="<?php echo e(route('admin.notifications.destroy' , [ 'id' => $notification->id ] )); ?>"
                                               method="post">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
+                                            <?php echo e(csrf_field()); ?>
+
+                                            <?php echo e(method_field('DELETE')); ?>
+
                                             <button type="button" id="delete"
                                                     class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
                                                 <i class="la la-trash"></i></button>
                                         </form>
-                                    @endcan
+                                    <?php endif; ?>
 
                                 </td>
 
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
 
-                    {!! $notifications->appends(request()->input())->links() !!}
+                    <?php echo $notifications->appends(request()->input())->links(); ?>
+
 
                 </div>
 
@@ -167,4 +170,5 @@
     </div>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin',[ 'page'=> 'notifications' ], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

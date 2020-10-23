@@ -105,6 +105,11 @@ return array(
     'accounts_in_page' => 'Accounts in page count',
     'latest_accounts_last_days' => 'Latest accounts in last days',
 
+    'followed_collections_in_page' => 'Collections in page count',
+    'new_collections_in_page' => 'New Collections in page count',
+    'new_collections_from' => 'New Collection From',
+
+
     'send_notification' => 'Send Notification',
     'send' => 'Send',
     'content' => 'Content',
@@ -120,5 +125,9 @@ return array(
     'featured_img' => 'Featured Image',
 
     'target' => 'Target',
+    'items' => 'Accounts|Collections',
+    'notification_action_type' => 'Action Type',
 
+    'account' => 'Account',
+    'collection' => 'Collection',
 );

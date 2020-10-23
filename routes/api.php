@@ -43,6 +43,10 @@ Route::group(['namespace' => 'Api', 'middleware' => ['api.localization', 'HttpsR
 
     });
 
+
+    Route::get('notifications', 'NotificationController@index')->middleware('auth.api');
+    Route::delete('notification/{id}', 'NotificationController@delete')->middleware('auth.api');
+
     Route::get('accounts', 'AccountsController@index');
     Route::post('accounts', 'AccountsController@store')->middleware('auth.api');
     Route::post('accounts/{id}/vote', 'AccountsController@vote')->middleware('auth.api');

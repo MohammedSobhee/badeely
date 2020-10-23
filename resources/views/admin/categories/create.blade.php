@@ -122,6 +122,21 @@
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
+                                        <label for="pageTitle" class="col-2 col-form-label">Active :</label>
+                                        <div class="col-10">
+										<span class="m-switch m-switch--lg m-switch--info m-switch--icon">
+												<label>
+						                        <input type="checkbox" id="status" name="status"
+                                                       value="1">
+						                        <span></span>
+						                        </label>
+						                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="m-form__section m-form__section--first">
+                                    <div class="form-group m-form__group row">
                                         <label class="col-2 col-form-label" for="image">@lang('inputs.image') :</label>
                                         <div class="col-10">
                                             <img id="upload-pic" src="" class="img-responsive" width="500">

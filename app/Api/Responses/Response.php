@@ -24,7 +24,7 @@ trait Response {
 
         $return = $this->getResponse($isSuccess, $msg, $errorList, $data, $paginate);
 
-        return \Response::json($return,$this->getStatusCode(),$header);
+        return response()->json($return,$this->getStatusCode(),$header);
 
     }
 
@@ -46,7 +46,6 @@ trait Response {
                 $status['message'] = array_first($errorList);
             }
         }
-
         $return = ['status' => $status,'data' => $data ? $data : []];
 
         if ($paginate){
@@ -57,6 +56,7 @@ trait Response {
     }
 
     public function success($data = null, $paginate = null){
+
         return new SuccessResponse($data,$paginate);
     }
 

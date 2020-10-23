@@ -23,10 +23,10 @@
     <!-- FAVICON -->
 
 
-        <link href="https://fonts.googleapis.com/css?family=Cairo:200,300,400,600,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cairo:200,300,400,600,700,900" rel="stylesheet">
 
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet"/>
 
     <link href="{{ url('assets/admin/vendors/base/vendors.bundle.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ url('assets/admin/demo/default/base/style.bundle.css') }}" rel="stylesheet" type="text/css"/>
@@ -36,7 +36,7 @@
         <link href="{{ url('assets/admin/style-rtl.css') }}" rel="stylesheet" type="text/css"/>
     @endif
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css"/>
 
     @yield('styles')
 
@@ -465,6 +465,19 @@
 
     }
 
+    $(document).on('change', '#action', function () {
+
+        $.ajax({
+            url: '{{url('admin/items/')}}/' + $(this).val(),
+            type: 'GET',
+
+            success: function (data) {
+                $('#action_id').html(data).trigger("change");
+                $('#action_id').selectpicker('refresh');
+
+            }
+        })
+    });
 </script>
 
 @stack('js')
