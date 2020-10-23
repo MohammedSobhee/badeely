@@ -216,16 +216,16 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group m-form__group row">
-                                                    <label class="col-2 col-form-label"><?php echo app('translator')->getFromJson('inputs.new_collections_from'); ?>
-                                                        :</label>
-                                                    <div class="col-10">
-                                                        <input type="text" id="m_datepicker_1"
-                                                               class="form-control m-input"
-                                                               name="new_collections_from"
-                                                               value="<?php echo e($settings->new_collections_from); ?>">
-                                                    </div>
-                                                </div>
+
+
+
+
+
+
+
+
+
+
 
                                                 <div class="form-group m-form__group row">
                                                     <label for="latest_accounts_last_days"

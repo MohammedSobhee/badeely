@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     use Transable;
-    public $timestamps = false;
 
     protected $guarded = [];
 
