@@ -58,7 +58,3 @@ return [
 
 
 
-//FACEBOOK_CLIENT_ID=1876323382672084
-//FACEBOOK_CLIENT_SECRET=c754120d6f49fdb057c044ae1ee94ddc
-//FACEBOOK_REDIRECT_URL=http://cosette.araac.info/auth/facebook/callback
-

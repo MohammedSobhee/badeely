@@ -83,6 +83,9 @@ class CategoriesController extends Controller
     public function accounts($id)
     {
         $category = Category::find($id);
+        if (!$category) {
+            return $this->error()->NotFound();
+        }
 
         $accounts = Account::published()->where('country_id', config('country'));
 
