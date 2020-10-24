@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Api', 'middleware' => ['api.localization', 'HttpsR
     Route::get('countries', 'HomeController@countries');
 
     Route::get('categories', 'CategoriesController@index');
+    Route::get('categories2', 'CategoriesController@index2');
     Route::get('categories/{id}', 'CategoriesController@show');
 
     Route::get('categories/{id}/accounts', 'CategoriesController@accounts');

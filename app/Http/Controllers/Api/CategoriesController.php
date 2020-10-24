@@ -71,6 +71,25 @@ class CategoriesController extends Controller
 
         return $this->success($data)->data();
     }
+    public function index2()
+    {
+        $all_categories = Category::where('parent_id', 0)->orderBy('sort')
+            ->whereHas('countries', function ($q) {
+                $q->where('id', config('country'));
+            })->where('status', 1)->get();
+
+        $all_categories = $this->transformer(new CategoriesTransformer(), $all_categories)->collection();
+
+        $data = [
+            'items' => $all_categories,
+            'featured' => [
+                'title' => config('settings.featured_title_' . app()->getLocale()),
+                'image' => url('/assets/featured_img.png') . '?time=' . time(),
+            ],
+        ];
+
+        return $this->success($data)->data();
+    }
 
     public function show($id)
     {
