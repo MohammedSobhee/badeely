@@ -61,7 +61,9 @@ class LoginController extends Controller
 //
 //                return json_decode($response->getBody(), true);
             } else if ($provider == 'apple') {
-                $this->appleLogin(\request()->all());
+                $socialUser = $this->appleLogin(\request()->all());
+                $socialUser['id'] = $socialUser['sub'];
+                $socialUser['name'] = substr($socialUser['email'], 0, strpos('@', $socialUser['email']));
             } else {
                 return $this->error()->BadRequest('error_in_access_token');
             }
@@ -173,7 +175,6 @@ class LoginController extends Controller
 
     }
 
-    public
     function login(Request $request)
     {
         $this->validator([
@@ -247,14 +248,13 @@ class LoginController extends Controller
 
         $socialUser = Socialite::driver($provider)->userFromToken($token);
 
-        dd($socialUser);
         $user = $this->getLocalUser($socialUser);
 
-        dd($user);
+        return $socialUser;
     }
 
     /**
-     * @param  OAuthTwoUser  $socialUser
+     * @param OAuthTwoUser $socialUser
      * @return User|null
      */
     protected function getLocalUser(OAuthTwoUser $socialUser): ?User
@@ -270,7 +270,7 @@ class LoginController extends Controller
 
 
     /**
-     * @param  OAuthTwoUser  $socialUser
+     * @param OAuthTwoUser $socialUser
      * @return User|null
      */
     protected function registerAppleUser(OAuthTwoUser $socialUser): ?User
