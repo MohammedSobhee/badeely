@@ -8,6 +8,7 @@ use App\SocialProvider;
 use App\User;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
 use Socialite;
@@ -62,8 +63,11 @@ class LoginController extends Controller
 //                return json_decode($response->getBody(), true);
             } else if ($provider == 'apple') {
                 $socialUser = $this->appleLogin(\request()->all());
+
+
                 $socialUser['id'] = $socialUser['sub'];
-                $socialUser['name'] = substr($socialUser['email'], 0, strpos('@', $socialUser['email']));
+
+                $socialUser['name'] = substr($socialUser['email'], 0, strpos($socialUser['email'],'@'));
             } else {
                 return $this->error()->BadRequest('error_in_access_token');
             }
@@ -85,6 +89,7 @@ class LoginController extends Controller
 //                return $this->error()->BadRequest('error_in_access_token');
 //            }
 
+
             //check if we have logged provider
             $socialProvider = SocialProvider::where('provider_id', $socialUser['id'])->first();
 
@@ -96,6 +101,7 @@ class LoginController extends Controller
 
 
             if (!$socialProvider) {
+
                 //create a new user and provider
                 $user = User::firstOrCreate(
                     ['email' => $socialUser['email']],
@@ -248,7 +254,7 @@ class LoginController extends Controller
 
         $socialUser = Socialite::driver($provider)->userFromToken($token);
 
-        $user = $this->getLocalUser($socialUser);
+//        $user = $this->getLocalUser($socialUser);
 
         return $socialUser;
     }
@@ -257,33 +263,35 @@ class LoginController extends Controller
      * @param OAuthTwoUser $socialUser
      * @return User|null
      */
-    protected function getLocalUser(OAuthTwoUser $socialUser): ?User
-    {
-        $user = User::where('email', $socialUser->email)->first();
-
-        if (!$user) {
-            $user = $this->registerAppleUser($socialUser);
-        }
-
-        return $user;
-    }
+//    protected function getLocalUser(OAuthTwoUser $socialUser): ?User
+//    {
+//
+//        $user = User::where('email', $socialUser->email)->first();
+//
+//        if (!$user) {
+//            $user = $this->registerAppleUser($socialUser);
+//        }
+//
+//        return $user;
+//    }
 
 
     /**
      * @param OAuthTwoUser $socialUser
      * @return User|null
      */
-    protected function registerAppleUser(OAuthTwoUser $socialUser): ?User
-    {
-        $user = User::create(
-            [
-                'name' => request()->fullName ? request()->fullName : 'Apple User',
-                'email' => $socialUser->email,
-                'password' => Str::random(30), // Social users are password-less
-
-            ]
-        );
-        return $user;
-    }
+//    protected function registerAppleUser(OAuthTwoUser $socialUser): ?User
+//    {
+//        $user = User::create(
+//            [
+//                'name' => request()->fullName ? request()->fullName : 'Apple User',
+//                'email' => $socialUser->email,
+//                'password' => Str::random(30), // Social users are password-less
+//                'register_by' => 'apple', // Social users are password-less
+//
+//            ]
+//        );
+//        return $user;
+//    }
 
 }
