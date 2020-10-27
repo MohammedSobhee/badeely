@@ -57,6 +57,7 @@ class AccountsTransformer extends Transformer
             'sub_category' => $subCategories,
 
             'category' => $category,
+            'category_name' => count($category) > 0 ? $category[0]->name : null,
 
             'country' => [
                 'id' => $item->country->id ?? 0,
