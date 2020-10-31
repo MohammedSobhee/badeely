@@ -17,11 +17,12 @@ class FCM
     #API access key from Google API's Console
     private $key = 'AAAA3PZSqLQ:APA91bFMvteUjfd7d5yFJ1tLmq2D6xAwOWkDijw9jX93ezpQTwvtFQ95f-291DJwfSneKqgMa2gJpQDgsIIyM8DEySESGM9mguWu6e3UDISuHS8J_dvF8w3gS8To8ueIYcVkrViHB_xd';
 
-    public function send($title, $body)
+    public function send($title, $body,$data = null)
     {
         $msg = [
             'body' => $body,
             'title' => $title,
+            'data' => $data,
             'icon' => 'myicon',
             'sound' => 'mySound'
         ];
@@ -71,8 +72,8 @@ class FCM
         $optionBuilder = new OptionsBuilder();
         $optionBuilder->setTimeToLive(60 * 20);
 
-        $notificationBuilder = new PayloadNotificationBuilder($body);
-        $notificationBuilder->setBody($data)
+        $notificationBuilder = new PayloadNotificationBuilder($title);
+        $notificationBuilder->setBody($body)
             ->setSound('default')->setBadge(1);
 
         $dataBuilder = new PayloadDataBuilder();

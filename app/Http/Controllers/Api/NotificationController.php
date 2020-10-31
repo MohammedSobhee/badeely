@@ -17,7 +17,7 @@ class NotificationController extends Controller
     {
         $notifications = Notification::whereHas('Receivers', function ($query) {
             $query->where('receiver_id', auth()->user()->id);
-        })->paginate(10);
+        })->latest()->paginate(10);
 
         $data = $this->transformer(new NotificationsTransformer(), $notifications)->collection();
 

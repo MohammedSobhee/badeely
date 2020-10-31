@@ -33,6 +33,8 @@ Route::group(['namespace' => 'Api', 'middleware' => ['api.localization', 'HttpsR
     Route::get('categories/{id}/all_accounts', 'CategoriesController@allAccounts');
     Route::post('categories/{id}/add_click', 'CategoriesController@addClick')->middleware('auth.api');
     Route::post('feature_category/add_view', 'CategoriesController@addView')->middleware('auth.api');
+    Route::get('category/{id}', 'CategoriesController@getById');
+    Route::get('account/{id}', 'AccountsController@getById');
 
     Route::group(['prefix' => 'user', 'middleware' => 'auth.api'], function () {
 

@@ -71,6 +71,7 @@ class CategoriesController extends Controller
 
         return $this->success($data)->data();
     }
+
     public function index2()
     {
         $all_categories = Category::where('parent_id', 0)->orderBy('sort')
@@ -97,6 +98,17 @@ class CategoriesController extends Controller
         $categories = $this->transformer(new CategoriesTransformer(), $categories)->collection();
 
         return $this->success($categories)->data();
+    }
+
+    public function getById($id)
+    {
+        $category = Category::find($id);
+        if (!$category) {
+            return $this->error()->NotFound();
+        }
+        $category = $this->transformer(new CategoriesTransformer(), $category)->one();
+
+        return $this->success($category)->custom('successfully_sent');
     }
 
     public function accounts($id)

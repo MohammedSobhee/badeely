@@ -48,7 +48,7 @@ class NotificationsController extends Controller
 //                (new FCM())->sendNotification($receiver, request()->get('title'), $notification);
 //            }
 
-            (new FCM())->send(request('title'), $notification);
+            (new FCM())->send(request('title'), request('content'), $notification);
 //            (new FCM())->send(request('title'), request('content'));
 //            Notification::create($data);
         } else {

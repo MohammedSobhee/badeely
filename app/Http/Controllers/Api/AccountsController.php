@@ -159,7 +159,7 @@ class AccountsController extends Controller
         $account = $this->transformer(new AccountsTransformer(), $account)->one();
 
         return $this->success($account)
-            ->created('successfully_sent');
+            ->created('success');
 
     }
 
@@ -199,6 +199,17 @@ class AccountsController extends Controller
         return $this->success($account)
             ->data('account_has_been_voted');
 
+    }
+
+    public function getById($id)
+    {
+        $account = Account::find($id);
+        if (!$account) {
+            return $this->error()->NotFound();
+        }
+        $account = $this->transformer(new AccountsTransformer(), $account)->one();
+
+        return $this->success($account)->custom('successfully_sent');
     }
 
     public function addView($id)
