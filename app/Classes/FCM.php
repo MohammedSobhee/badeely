@@ -17,7 +17,7 @@ class FCM
     #API access key from Google API's Console
     private $key = 'AAAA3PZSqLQ:APA91bFMvteUjfd7d5yFJ1tLmq2D6xAwOWkDijw9jX93ezpQTwvtFQ95f-291DJwfSneKqgMa2gJpQDgsIIyM8DEySESGM9mguWu6e3UDISuHS8J_dvF8w3gS8To8ueIYcVkrViHB_xd';
 
-    public function send($title, $body,$data = null)
+    public function send($title, $body,$data)
     {
         $msg = [
             'body' => $body,
@@ -83,7 +83,7 @@ class FCM
         $notification = $notificationBuilder->build();
         $data = $dataBuilder->build();
 
-        $downstreamResponse = \LaravelFCM\Facades\FCM::sendTo([$user->device_token], $option, $notification, $data);
+        $downstreamResponse = \LaravelFCM\Facades\FCM::sendTo([$user->device_token], $option, $notification, null);
 
 
         //return Array - you must remove all this tokens in your database

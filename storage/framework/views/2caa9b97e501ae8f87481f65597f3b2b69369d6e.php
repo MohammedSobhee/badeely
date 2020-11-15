@@ -1,10 +1,8 @@
-@extends('layouts.admin',[ 'page'=> 'edit_account' ])
+<?php $__env->startSection('styles'); ?>
+    <link href="<?php echo e(url('assets/admin/plugin/tagsinput/tagsinput.css')); ?>" rel="stylesheet" type="text/css"/>
+<?php $__env->stopSection(); ?>
 
-@section('styles')
-    <link href="{{ url('assets/admin/plugin/tagsinput/tagsinput.css') }}" rel="stylesheet" type="text/css"/>
-@endsection
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <div class="m-grid__item m-grid__item--fluid m-wrapper">
 
@@ -12,11 +10,11 @@
 
             <div class="d-flex align-items-center">
                 <div class="mr-auto">
-                    <h3 class="m-subheader__title m-subheader__title--separator">@lang('pages.accounts')</h3>
+                    <h3 class="m-subheader__title m-subheader__title--separator"><?php echo app('translator')->getFromJson('pages.accounts'); ?></h3>
                     <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
 
                         <li class="m-nav__item m-nav__item--home">
-                            <a href="{{ route('admin_home') }}" class="m-nav__link m-nav__link--icon">
+                            <a href="<?php echo e(route('admin_home')); ?>" class="m-nav__link m-nav__link--icon">
                                 <i class="m-nav__link-icon la la-home"></i>
                             </a>
                         </li>
@@ -24,15 +22,15 @@
                         <li class="m-nav__separator">-</li>
 
                         <li class="m-nav__item">
-                            <a href="{{ route('admin.accounts.index') }}" class="m-nav__link">
-                                <span class="m-nav__link-text">@lang('pages.accounts')</span>
+                            <a href="<?php echo e(route('admin.accounts.index')); ?>" class="m-nav__link">
+                                <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.accounts'); ?></span>
                             </a>
                         </li>
 
                         <li class="m-nav__separator">-</li>
 
                         <li class="m-nav__item">
-                            <span class="m-nav__link-text">@lang('pages.edit_account')</span>
+                            <span class="m-nav__link-text"><?php echo app('translator')->getFromJson('pages.edit_account'); ?></span>
                         </li>
 
                     </ul>
@@ -43,7 +41,7 @@
 
         <div class="m-subheader ">
 
-            @if($account->user)
+            <?php if($account->user): ?>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="m-portlet">
@@ -53,8 +51,8 @@
                                     <span class="m-portlet__head-icon m--hide">
                                     <i class="la la-gear"></i>
                                     </span>
-                                        <h3 class="m-portlet__head-text">@lang('dashboard.added_by') :
-                                            <a href="{{ route('admin.users.edit',$account->user->id) }}">{{ $account->user->name }}</a>
+                                        <h3 class="m-portlet__head-text"><?php echo app('translator')->getFromJson('dashboard.added_by'); ?> :
+                                            <a href="<?php echo e(route('admin.users.edit',$account->user->id)); ?>"><?php echo e($account->user->name); ?></a>
                                         </h3>
                                     </div>
                                 </div>
@@ -62,11 +60,11 @@
 
                             <div class="m-portlet__body">
                                 <div class="form-group m-form__group row">
-                                    <label class="col-2 col-form-label" for="notes">@lang('inputs.notes') :</label>
+                                    <label class="col-2 col-form-label" for="notes"><?php echo app('translator')->getFromJson('inputs.notes'); ?> :</label>
                                     <div class="col-10">
                                         <textarea name="notes" id="notes" class="form-control m-input" cols="30"
                                                   rows="10"
-                                                  readonly>{{ $account->note ?? __('inputs.undefined') }}</textarea>
+                                                  readonly><?php echo e($account->note ?? __('inputs.undefined')); ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            <?php endif; ?>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -85,16 +83,18 @@
 								<span class="m-portlet__head-icon m--hide">
 								<i class="la la-gear"></i>
 								</span>
-                                    <h3 class="m-portlet__head-text">@lang('pages.edit_account')</h3>
+                                    <h3 class="m-portlet__head-text"><?php echo app('translator')->getFromJson('pages.edit_account'); ?></h3>
                                 </div>
                             </div>
                         </div>
 
                         <form class="m-form validation-form" method="post"
-                              action="{{ route('admin.accounts.update',[ 'id' => $account->id ]) }}"
+                              action="<?php echo e(route('admin.accounts.update',[ 'id' => $account->id ])); ?>"
                               enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            {{ method_field('PATCH') }}
+                            <?php echo e(csrf_field()); ?>
+
+                            <?php echo e(method_field('PATCH')); ?>
+
 
                             <div class="m-portlet__body">
 
@@ -104,35 +104,35 @@
 
                                         <div class="tab-pane active">
 
-                                            @if( config('languages') > 1 )
+                                            <?php if( config('languages') > 1 ): ?>
                                                 <ul class="nav nav-tabs">
-                                                    @foreach( config('languages') as $code => $label )
+                                                    <?php $__currentLoopData = config('languages'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $code => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <li class="nav-item m-tabs__item">
-                                                            <a class="nav-link m-tabs__link {{ $loop->first ? 'active':''}}"
-                                                               href="#tb-lang-{{ $code }}"
-                                                               data-toggle="tab">{{ $label }}</a>
+                                                            <a class="nav-link m-tabs__link <?php echo e($loop->first ? 'active':''); ?>"
+                                                               href="#tb-lang-<?php echo e($code); ?>"
+                                                               data-toggle="tab"><?php echo e($label); ?></a>
                                                         </li>
-                                                    @endforeach
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </ul>
-                                            @endif
+                                            <?php endif; ?>
 
                                             <div class="tab-content">
 
-                                            @foreach( config('languages')  as $code => $label )
+                                            <?php $__currentLoopData = config('languages'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $code => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <!-- content tab start -->
-                                                    <div class="tab-pane {{ $loop->first ? 'active':''}}"
-                                                         id="tb-lang-{{ $code }}">
+                                                    <div class="tab-pane <?php echo e($loop->first ? 'active':''); ?>"
+                                                         id="tb-lang-<?php echo e($code); ?>">
 
                                                         <div class="m-form__section m-form__section--first">
                                                             <div class="form-group m-form__group row">
                                                                 <label class="col-2 col-form-label"
-                                                                       for="account_labels[{{ $code }}]">@lang('inputs.name')
+                                                                       for="account_labels[<?php echo e($code); ?>]"><?php echo app('translator')->getFromJson('inputs.name'); ?>
                                                                     :</label>
                                                                 <div class="col-10">
-                                                                    <input type="text" id="account_labels[{{ $code }}]"
+                                                                    <input type="text" id="account_labels[<?php echo e($code); ?>]"
                                                                            class="form-control m-input"
-                                                                           name="account_labels[{{ $code }}]"
-                                                                           value="{{ $account->name($code) }}">
+                                                                           name="account_labels[<?php echo e($code); ?>]"
+                                                                           value="<?php echo e($account->name($code)); ?>">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -140,20 +140,20 @@
                                                         <div class="m-form__section m-form__section--first">
                                                             <div class="form-group m-form__group row">
                                                                 <label class="col-2 col-form-label"
-                                                                       for="account_names[{{ $code }}]">@lang('inputs.account_name')
+                                                                       for="account_names[<?php echo e($code); ?>]"><?php echo app('translator')->getFromJson('inputs.account_name'); ?>
                                                                     :</label>
                                                                 <div class="col-10">
-                                                                    <input type="text" id="account_names[{{ $code }}]"
+                                                                    <input type="text" id="account_names[<?php echo e($code); ?>]"
                                                                            class="form-control m-input"
-                                                                           name="account_names[{{ $code }}]"
-                                                                           value="{{ $account->description($code) }}">
+                                                                           name="account_names[<?php echo e($code); ?>]"
+                                                                           value="<?php echo e($account->description($code)); ?>">
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                     </div>
                                                     <!-- content tab end -->
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
                                             </div>
@@ -166,27 +166,27 @@
                                 <div class="m-section__content">
                                     <div class="m-demo" data-code-preview="true" data-code-html="true"
                                          data-code-js="false">
-                                        <label class="col-2 col-form-label">@lang('inputs.gallery')</label>
+                                        <label class="col-2 col-form-label"><?php echo app('translator')->getFromJson('inputs.gallery'); ?></label>
                                         <div class="m-demo__preview">
 
                                             <div id="image_preview"
                                                  class="m-stack m-stack--ver m-stack--general m-stack--demo">
-                                                @if($gallery = json_decode($account->images))
-                                                    @foreach($gallery as $image)
-                                                        <div id="index{{ $loop->index }}"
+                                                <?php if($gallery = json_decode($account->images)): ?>
+                                                    <?php $__currentLoopData = $gallery; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <div id="index<?php echo e($loop->index); ?>"
                                                              class="m-stack__item img-item">
                                                             <a data-fancybox="gallery"
-                                                               href="{{ media()->url('accounts',$image) }}">
-                                                                <img src="{{ media()->url('accounts',$image) }}"
+                                                               href="<?php echo e(media()->url('accounts',$image)); ?>">
+                                                                <img src="<?php echo e(media()->url('accounts',$image)); ?>"
                                                                      style="width: 100px;height: 100px;">
                                                             </a>
                                                             <input type="hidden" name="old_images[]"
-                                                                   value="{{ $image }}">
+                                                                   value="<?php echo e($image); ?>">
                                                             <button type="button"
-                                                                    class="btn btn-danger btn-sm remove-img index{{ $loop->index }}">@lang('dashboard.remove')</button>
+                                                                    class="btn btn-danger btn-sm remove-img index<?php echo e($loop->index); ?>"><?php echo app('translator')->getFromJson('dashboard.remove'); ?></button>
                                                         </div>
-                                                    @endforeach
-                                                @endif
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
 
@@ -198,29 +198,29 @@
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="mobile">@lang('inputs.mobile'):</label>
+                                        <label class="col-2 col-form-label" for="mobile"><?php echo app('translator')->getFromJson('inputs.mobile'); ?>:</label>
                                         <div class="col-10">
                                             <input type="text" id="mobile" class="form-control m-input" name="mobile"
-                                                   value="{{ $account->mobile }}">
+                                                   value="<?php echo e($account->mobile); ?>">
                                         </div>
                                     </div>
                                 </div>
 
-                                {{--<div class="m-form__section m-form__section--first">--}}
-                                {{--<div class="form-group m-form__group row">--}}
-                                {{--<label class="col-2 col-form-label" for="phone">@lang('inputs.phone') :</label>--}}
-                                {{--<div class="col-10">--}}
-                                {{--<input type="text" id="phone" class="form-control m-input" name="phone" value="{{ $account->phone }}">--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="email">@lang('inputs.email') :</label>
+                                        <label class="col-2 col-form-label" for="email"><?php echo app('translator')->getFromJson('inputs.email'); ?> :</label>
                                         <div class="col-10">
                                             <input type="email" id="email" class="form-control m-input" name="email"
-                                                   value="{{ $account->email }}">
+                                                   value="<?php echo e($account->email); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -228,55 +228,55 @@
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
                                         <label class="col-2 col-form-label"
-                                               for="account_type">@lang('inputs.account_type') :</label>
+                                               for="account_type"><?php echo app('translator')->getFromJson('inputs.account_type'); ?> :</label>
                                         <div class="col-10">
                                             <input type="text" id="account_type" class="form-control m-input"
-                                                   name="account_type" value="{{ $account->account_type }}">
+                                                   name="account_type" value="<?php echo e($account->account_type); ?>">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="insta_url">@lang('inputs.insta_url')
+                                        <label class="col-2 col-form-label" for="insta_url"><?php echo app('translator')->getFromJson('inputs.insta_url'); ?>
                                             :</label>
                                         <div class="col-10">
                                             <input type="text" id="insta_url" class="form-control m-input"
-                                                   name="insta_url" value="{{ $account->insta_url }}"
+                                                   name="insta_url" value="<?php echo e($account->insta_url); ?>"
                                                    placeholder="http://instagram.com/username">
                                         </div>
                                     </div>
                                 </div>
 
-                                {{--                                <div class="m-form__section m-form__section--first">--}}
-                                {{--                                    <div class="form-group m-form__group row">--}}
-                                {{--                                        <label class="col-2 col-form-label" for="insta_url">@lang('inputs.insta_url')--}}
-                                {{--                                            :</label>--}}
-                                {{--                                        <div class="col-10">--}}
-                                {{--                                            <input type="text" id="insta_url" class="form-control m-input"--}}
-                                {{--                                                   name="insta_url" value="{{ old('insta_url') }}"--}}
-                                {{--                                                   placeholder="http://instagram.com/username">--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
                                         <label class="col-2 col-form-label"
-                                               for="facebook_url">@lang('inputs.facebook_url') :</label>
+                                               for="facebook_url"><?php echo app('translator')->getFromJson('inputs.facebook_url'); ?> :</label>
                                         <div class="col-10">
                                             <input type="text" id="facebook_url" class="form-control m-input"
-                                                   name="facebook_url" value="{{ $account->facebook_url }}"
+                                                   name="facebook_url" value="<?php echo e($account->facebook_url); ?>"
                                                    placeholder="http://facebook.com/username">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="whatsapp">@lang('inputs.whatsapp')
+                                        <label class="col-2 col-form-label" for="whatsapp"><?php echo app('translator')->getFromJson('inputs.whatsapp'); ?>
                                             :</label>
                                         <div class="col-10">
                                             <input type="text" id="whatsapp" class="form-control m-input"
-                                                   name="whatsapp" value="{{ $account->whatsapp }}"
+                                                   name="whatsapp" value="<?php echo e($account->whatsapp); ?>"
                                                    placeholder="http://whatsapp.com/mobile">
                                         </div>
                                     </div>
@@ -284,10 +284,10 @@
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
                                         <label class="col-2 col-form-label"
-                                               for="website_link">@lang('inputs.website_link') :</label>
+                                               for="website_link"><?php echo app('translator')->getFromJson('inputs.website_link'); ?> :</label>
                                         <div class="col-10">
                                             <input type="text" id="website_link" class="form-control m-input"
-                                                   name="website_link" value="{{ $account->website_link }}"
+                                                   name="website_link" value="<?php echo e($account->website_link); ?>"
                                                    placeholder="http://website.com/link">
                                         </div>
                                     </div>
@@ -295,10 +295,10 @@
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
                                         <label class="col-2 col-form-label"
-                                               for="youtube">@lang('inputs.youtube') :</label>
+                                               for="youtube"><?php echo app('translator')->getFromJson('inputs.youtube'); ?> :</label>
                                         <div class="col-10">
                                             <input type="text" id="youtube" class="form-control m-input"
-                                                   name="youtube" value="{{ $account->youtube }}"
+                                                   name="youtube" value="<?php echo e($account->youtube); ?>"
                                                    placeholder="http://youtube.com/link">
                                         </div>
                                     </div>
@@ -306,15 +306,15 @@
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="country">@lang('inputs.country')
+                                        <label class="col-2 col-form-label" for="country"><?php echo app('translator')->getFromJson('inputs.country'); ?>
                                             :</label>
                                         <div class="col-10">
                                             <select id="country" name="country"
                                                     class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type">
-                                                <option value="">@lang('inputs.country')</option>
-                                                @foreach( $countries as $country)
-                                                    <option value="{{ $country->id }}" {{ $country->id == $account->country_id ? 'selected' : '' }}>{{ $country->name }}</option>
-                                                @endforeach
+                                                <option value=""><?php echo app('translator')->getFromJson('inputs.country'); ?></option>
+                                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($country->id); ?>" <?php echo e($country->id == $account->country_id ? 'selected' : ''); ?>><?php echo e($country->name); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
                                     </div>
@@ -322,16 +322,16 @@
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="categories">@lang('inputs.category')
+                                        <label class="col-2 col-form-label" for="categories"><?php echo app('translator')->getFromJson('inputs.category'); ?>
                                             :</label>
                                         <div class="col-10">
                                             <select id="categories" name="categories[]"
                                                     class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     multiple>
-                                                @foreach( $categories as $category)
-                                                    <option value="{{ $category->id }}"
-                                                            {{ in_array($category->id,$accountCategories) ? 'selected' : '' }}>{{ $category->name }}</option>
-                                                @endforeach
+                                                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($category->id); ?>"
+                                                            <?php echo e(in_array($category->id,$accountCategories) ? 'selected' : ''); ?>><?php echo e($category->name); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                             <div class="categories-loader"></div>
                                         </div>
@@ -341,17 +341,18 @@
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
                                         <label class="col-2 col-form-label"
-                                               for="sub_category">@lang('inputs.sub_category') :</label>
+                                               for="sub_category"><?php echo app('translator')->getFromJson('inputs.sub_category'); ?> :</label>
                                         <div class="col-10">
                                             <select id="sub_category" name="categories[]"
                                                     class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     multiple>
-                                                @foreach( $subCategories as $category)
-                                                    <option value="{{ $category->id }}"
-                                                            data-parent="{{ $category->parent->id ?? '' }}"
-                                                            {{ in_array($category->id,$accountCategories) ? 'selected' : '' }}>{{ $category->name }}
-                                                        - {{ $category->parent->name ?? '' }}</option>
-                                                @endforeach
+                                                <?php $__currentLoopData = $subCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($category->id); ?>"
+                                                            data-parent="<?php echo e($category->parent->id ?? ''); ?>"
+                                                            <?php echo e(in_array($category->id,$accountCategories) ? 'selected' : ''); ?>><?php echo e($category->name); ?>
+
+                                                        - <?php echo e($category->parent->name ?? ''); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                             <div class="sub_category-loader"></div>
                                         </div>
@@ -360,28 +361,28 @@
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="country">@lang('inputs.tags') :</label>
+                                        <label class="col-2 col-form-label" for="country"><?php echo app('translator')->getFromJson('inputs.tags'); ?> :</label>
                                         <div class="col-10">
                                             <input type="text" class="form-control m-input" name="tags" id="tags"
-                                                   value="{{ $account->tags }}" data-role="tagsinput">
+                                                   value="<?php echo e($account->tags); ?>" data-role="tagsinput">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="country">@lang('inputs.app_tags')
+                                        <label class="col-2 col-form-label" for="country"><?php echo app('translator')->getFromJson('inputs.app_tags'); ?>
                                             :</label>
                                         <div class="col-10">
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     id="app_tags"
                                                     name="app_tags[]" multiple>
 
-                                                @if(isset($account->app_tags))
-                                                    @foreach(explode(',', $account->app_tags) as $item)
-                                                        <option selected>{{$item}}</option>
-                                                    @endforeach
-                                                @endif
+                                                <?php if(isset($account->app_tags)): ?>
+                                                    <?php $__currentLoopData = explode(',', $account->app_tags); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option selected><?php echo e($item); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                <?php endif; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -389,28 +390,28 @@
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label">@lang('inputs.started_at') :</label>
+                                        <label class="col-2 col-form-label"><?php echo app('translator')->getFromJson('inputs.started_at'); ?> :</label>
                                         <div class="col-10">
-                                            @php
+                                            <?php
                                                 $expire = $account->started_at ?
                                                 date('m/d/Y',strtotime($account->started_at)) : null;
-                                            @endphp
+                                            ?>
                                             <input type="text" id="m_datepicker_2" class="form-control m-input"
-                                                   name="started_at" value="{{ $expire }}">
+                                                   name="started_at" value="<?php echo e($expire); ?>">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label">@lang('inputs.expire_at') :</label>
+                                        <label class="col-2 col-form-label"><?php echo app('translator')->getFromJson('inputs.expire_at'); ?> :</label>
                                         <div class="col-10">
-                                            @php
+                                            <?php
                                                 $expire = $account->expire_at ?
                                                 date('m/d/Y',strtotime($account->expire_at)) : null;
-                                            @endphp
+                                            ?>
                                             <input type="text" id="m_datepicker_1" class="form-control m-input"
-                                                   name="expire_at" value="{{ $expire }}">
+                                                   name="expire_at" value="<?php echo e($expire); ?>">
                                             <p>Leave blank for unlimited</p>
                                         </div>
                                     </div>
@@ -418,25 +419,25 @@
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label" for="priority">@lang('inputs.priority')
+                                        <label class="col-2 col-form-label" for="priority"><?php echo app('translator')->getFromJson('inputs.priority'); ?>
                                             :</label>
                                         <div class="col-10">
                                             <input type="number" id="priority" class="form-control m-input"
-                                                   name="priority" value="{{ $account->priority }}">
+                                                   name="priority" value="<?php echo e($account->priority); ?>">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
-                                        <label for="pageTitle" class="col-2 col-form-label">@lang('inputs.status')
+                                        <label for="pageTitle" class="col-2 col-form-label"><?php echo app('translator')->getFromJson('inputs.status'); ?>
                                             :</label>
                                         <div class="col-10">
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     name="status">
-                                                @foreach(\App\Account::statuses as $id => $status)
-                                                    <option value="{{ $id }}" {{ $account->status == $id ? 'selected' : '' }}>@lang('inputs.'.$status['key'])</option>
-                                                @endforeach
+                                                <?php $__currentLoopData = \App\Account::statuses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id => $status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($id); ?>" <?php echo e($account->status == $id ? 'selected' : ''); ?>><?php echo app('translator')->getFromJson('inputs.'.$status['key']); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                         </div>
                                     </div>
@@ -449,7 +450,7 @@
 										<span class="m-switch m-switch--lg m-switch--info m-switch--icon">
 												<label>
 						                        <input type="checkbox" id="is_featured" name="is_featured" value="1"
-                                                        {{ $account->featured_from && $account->featured_to ? 'checked' : '' }}>
+                                                        <?php echo e($account->featured_from && $account->featured_to ? 'checked' : ''); ?>>
 						                        <span></span>
 						                        </label>
 						                    </span>
@@ -458,21 +459,21 @@
                                 </div>
 
                                 <div id="featured_between" class="form-group m-form__group row"
-                                     style="{{ $account->featured_from && $account->featured_to ? '' : 'display:none' }}">
-                                    <label class="col-form-label col-lg-3 col-sm-12">@lang('inputs.featured_between')</label>
+                                     style="<?php echo e($account->featured_from && $account->featured_to ? '' : 'display:none'); ?>">
+                                    <label class="col-form-label col-lg-3 col-sm-12"><?php echo app('translator')->getFromJson('inputs.featured_between'); ?></label>
                                     <div class="col-lg-4 col-md-9 col-sm-12">
                                         <div class="input-daterange input-group" id="m_datepicker_5">
-                                            @php
+                                            <?php
                                                 $start = date('m/d/Y',strtotime($account->featured_from));
                                                 $end = date('m/d/Y',strtotime($account->featured_to));
-                                            @endphp
+                                            ?>
                                             <input type="text" class="form-control m-input" name="start"
-                                                   value="{{ $start }}" placeholder="@lang('inputs.from')">
+                                                   value="<?php echo e($start); ?>" placeholder="<?php echo app('translator')->getFromJson('inputs.from'); ?>">
                                             <div class="input-group-append">
                                                 <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" name="end" value="{{ $end }}"
-                                                   placeholder="@lang('inputs.to')">
+                                            <input type="text" class="form-control" name="end" value="<?php echo e($end); ?>"
+                                                   placeholder="<?php echo app('translator')->getFromJson('inputs.to'); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -483,7 +484,7 @@
                                 <div class="m-form__actions m-form__actions">
 
                                     <button type="submit"
-                                            class="btn btn-accent m-btn m-btn--air m-btn--custom">@lang('dashboard.save')</button>
+                                            class="btn btn-accent m-btn m-btn--air m-btn--custom"><?php echo app('translator')->getFromJson('dashboard.save'); ?></button>
 
                                 </div>
                             </div>
@@ -498,11 +499,11 @@
     </div>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 
-    <script src="{{ url('assets/admin/plugin/tagsinput/tagsinput.js') }}"></script>
+    <script src="<?php echo e(url('assets/admin/plugin/tagsinput/tagsinput.js')); ?>"></script>
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
@@ -591,7 +592,7 @@ $('#is_featured').change(function () {
                          <a data-fancybox="gallery" href="` + URL.createObjectURL(event.target.files[i]) + `">
                             <img src="` + URL.createObjectURL(event.target.files[i]) + `" style="width: 100px;height: 100px;">
                          </a>
-                         <button type="button" class="btn btn-danger btn-sm remove-img index` + index + `">@lang('dashboard.remove')</button>
+                         <button type="button" class="btn btn-danger btn-sm remove-img index` + index + `"><?php echo app('translator')->getFromJson('dashboard.remove'); ?></button>
                     </div>
                 `);
 
@@ -629,9 +630,9 @@ $('#is_featured').change(function () {
             var country = $(this).val();
             $('#categories').html('');
             $('#sub_category').html('');
-            $('.categories-loader').html('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i><span>@lang('dashboard.plz_wait')</span>');
+            $('.categories-loader').html('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i><span><?php echo app('translator')->getFromJson('dashboard.plz_wait'); ?></span>');
 
-            $.get('{{ route('ajax.categories') }}', {country: country}, function (data) {
+            $.get('<?php echo e(route('ajax.categories')); ?>', {country: country}, function (data) {
                 var html = '';
                 $.each(data, function (key, value) {
                     html += "<option value='" + value.id + "'>" + value.name + "</option>";
@@ -653,9 +654,9 @@ $('#is_featured').change(function () {
             var old_selected = $('#sub_category').val();
 
             $('#sub_category').html('');
-            $('.sub_category-loader').html('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i><span>@lang('dashboard.plz_wait')</span>');
+            $('.sub_category-loader').html('<i class="fa fa-circle-o-notch fa-spin fa-fw"></i><span><?php echo app('translator')->getFromJson('dashboard.plz_wait'); ?></span>');
 
-            $.get('{{ route('ajax.sub_categories') }}', {
+            $.get('<?php echo e(route('ajax.sub_categories')); ?>', {
                 categories: categories,
                 old_selected: old_selected,
                 country: country
@@ -679,4 +680,5 @@ $('#is_featured').change(function () {
 
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin',[ 'page'=> 'edit_account' ], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
