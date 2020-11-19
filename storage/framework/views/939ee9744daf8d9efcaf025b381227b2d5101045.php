@@ -400,25 +400,54 @@
 
     <script src="<?php echo e(url('assets/admin/plugin/tagsinput/tagsinput.js')); ?>"></script>
 
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-    $(document).ready(function () {
 
-        $(document).on('keyup', '#tags', function () {
-            $('#app_tags').html('').trigger("change");
-            var myStr = this.value;
-            var strArray = myStr.split(",");
-            var options = '';
-            // Display array values on page
-            for (var i = 0; i < strArray.length; i++) {
+$('#tags').tagsinput({
+    tagClass: 'label label-default label-slow',
+    trimValue: true,
+    allowDuplicates: true,
+    freeInput: true
+});
 
-                options += '<option selected>' + strArray[i] + '</option>';
-            }
-            $('#app_tags').html(options).trigger("change");
-            // $('#app_tags').selectpicker();
-            $('#app_tags').selectpicker('refresh');
-        });
+var tags = $('.bootstrap-tagsinput').find('span').map(function () {
+    return $(this).text();
+}).get();
+
+$('.bootstrap-tagsinput').sortable({
+    update: function () {
+        temp = [];
+        var $self = $(this);
+        tags = $self.find('span').map(function () {
+            return $(this).text();
+        }).get();
+        $self.parent().find('input[class!="ui-sortable-handle"]').val(tags.join(','));
+
+        $('#tags').trigger('keyup');
+    }
+});
+$('#image_preview').sortable();
+$(document).ready(function () {
+
+    $(document).on('keyup', '#tags', function () {
+
+        $('#app_tags').html('').trigger("change");
+        var myStr = $('#tags').val();
+        var strArray = myStr.split(",");
+        var options = '';
+        // Display array values on page
+        for (var i = 0; i < strArray.length; i++) {
+            if (strArray[i] == '') continue;
+            options += '<option selected>' + strArray[i] + '</option>';
+        }
+
+        // console.log(options);
+        $('#app_tags').html(options).trigger("change");
+        // $('#app_tags').selectpicker();
+        $('#app_tags').selectpicker('refresh');
     });
-
+});
     $("#m_datepicker_5").datepicker({
         leftArrow: '<i class="la la-angle-right"></i>',
         rightArrow: '<i class="la la-angle-left"></i>'

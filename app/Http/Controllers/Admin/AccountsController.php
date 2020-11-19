@@ -163,7 +163,7 @@ class AccountsController extends Controller
         $account->youtube = request('youtube');
         $account->tags = request('tags');
         if ((request()->has('app_tags')))
-            $account->app_tags = request('app_tags');
+            $account->app_tags = implode(',', request('app_tags'));
         $account->country_id = request('country');
         $account->status = request('status') ?? 3;
         $account->priority = request('priority') ?? 0;
