@@ -97,6 +97,7 @@ class AccountsController extends Controller
 
         $data = $this->transformer(new AccountsTransformer(), $accounts)->collection();
 
+
         return $this->success($data)
             ->pagination($accounts);
     }

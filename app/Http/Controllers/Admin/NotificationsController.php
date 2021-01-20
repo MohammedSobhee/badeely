@@ -38,7 +38,7 @@ class NotificationsController extends Controller
         }
         $all = request()->get('followers_collection');
 
-        if (!isset($all)) {
+        if (!isset($all) || (request()->has('action') && request()->get('action') == 'collection')) {
 
             $data['is_all'] = 1;
             $notification = Notification::create($data);
@@ -54,7 +54,6 @@ class NotificationsController extends Controller
         } else {
             // send notification to specific users
             $receivers = CategoryFollow::where('category_id', request()->get('followers_collection'))->pluck('user_id')->unique();
-
 
             $data['category_id'] = request()->get('followers_collection');
             $notification = Notification::create($data);
@@ -80,19 +79,24 @@ class NotificationsController extends Controller
         return back()->with('success', __('dashboard.deleted'));
     }
 
-    public function getItems($type = null)
+    public function getItems($type = null, $follow_collection = null)
     {
         $options = '';
 
         if ($type == 'account') {
-            $accounts = Account::published()->get();
+
+            if (isset($follow_collection)) {
+                $followers = CategoryFollow::where('category_id', $follow_collection)->pluck('user_id')->unique();
+                $accounts = Account::where('status', 1)->whereIn('id', $followers)->published()->get();
+            } else
+                $accounts = Account::where('status', 1)->published()->get();
 
             foreach ($accounts as $account) {
                 $options .= '<option value="' . $account->id . '">' . $account->name . '</option>';
             }
         }
         if ($type == 'collection') {
-            $categories = Category::all();
+            $categories = Category::where('parent_id', 0)->where('status', 1)->get();
 
             foreach ($categories as $category) {
                 $options .= '<option value="' . $category->id . '">' . $category->name . '</option>';

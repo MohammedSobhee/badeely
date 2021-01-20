@@ -65,7 +65,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group actions" style="display: none">
                                             <label for="title"
                                                    class="col-form-label">@lang('inputs.notification_action_type')
                                                 :</label>
@@ -78,7 +78,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group actions" style="display: none">
                                             <label for="title"
                                                    class="col-form-label">@lang('inputs.items') :</label>
 

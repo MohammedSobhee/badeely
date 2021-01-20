@@ -83,7 +83,7 @@ class FCM
         $notification = $notificationBuilder->build();
         $data = $dataBuilder->build();
 
-        $downstreamResponse = \LaravelFCM\Facades\FCM::sendTo([$user->device_token], $option, $notification, null);
+        $downstreamResponse = \LaravelFCM\Facades\FCM::sendTo('drWwxSApU_E:APA91bHZJ9Ql9L3djXTVb5yHQVgEmme2BCKc-VBJQwN7EmITNFomEsEQUIErdydFHeJKRcmxMwbRjLMWpF-N4KA6nJXhe_u_XztzG5EUewiGkvuYeX-8GW7g8A5XvPoA2Dd7zln6dRCP', $option, $notification, null);
 
 
         //return Array - you must remove all this tokens in your database
@@ -105,6 +105,9 @@ class FCM
             'numberModification' => $downstreamResponse->numberModification(),
         ];
 
+        if ($user->id == 14) {
+            dd($object);
+        }
         return $object;
     }
 

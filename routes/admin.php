@@ -35,7 +35,7 @@ Route::group(['middleware' => 'HttpsRedirect'], function () {
             Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
             Route::post('notifications/send', 'NotificationsController@send')->name('notifications.send');
             Route::delete('notifications/{id}', 'NotificationsController@destroy')->name('notifications.destroy');
-            Route::get('items/{type?}', 'NotificationsController@getItems')->name('notifications.items');
+            Route::get('items/{type?}/{follow_collection?}', 'NotificationsController@getItems')->name('notifications.items');
 
             Route::resource('search_history', 'SearchHistoryController', ['only' => ['index']]);
 

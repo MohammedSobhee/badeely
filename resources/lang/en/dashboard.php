@@ -57,7 +57,7 @@ return [
 
     'total_votes' => 'Total Bookmarks',
 
-    'categories' => 'Collections',
+    'categories' => 'Top collections count',
 
     'not_started' => 'Not Started',
     'waiting' => 'Waiting',

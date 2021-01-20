@@ -410,6 +410,27 @@
 
     $('.validation-form').parsley();
 
+    $(document).on('change', '#followers_collection', function () {
+        var selection = $(this).val();
+        if (selection == '') {
+            $('.actions').hide();
+        } else {
+            $('.actions').show();
+
+        }
+
+        if ($('#action').val() == 'account')
+            $.ajax({
+                url: '{{url('admin/items/')}}/' + 'account' + '/' + selection,
+                type: 'GET',
+
+                success: function (data) {
+                    $('#action_id').html(data).trigger("change");
+                    $('#action_id').selectpicker('refresh');
+
+                }
+            })
+    });
     $(document).on('click', '#delete', function () {
         var form = $(this).parent();
         swal({
@@ -465,10 +486,11 @@
 
     }
 
+
     $(document).on('change', '#action', function () {
 
         $.ajax({
-            url: '{{url('admin/items/')}}/' + $(this).val(),
+            url: '{{url('admin/items/')}}/' + $(this).val() + '/' + $('#followers_collection').val(),
             type: 'GET',
 
             success: function (data) {

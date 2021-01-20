@@ -46,7 +46,9 @@ class User extends Authenticatable
 
     public function upVotes()
     {
-        return $this->belongsToMany(Account::class, 'rates')->where('accounts.status', 1);
+        return $this->belongsToMany(Account::class, 'rates')->where('accounts.status', 1)->whereHas('categories', function ($query) {
+            $query->where('status', 1);
+        });
     }
 
 //    public function instagramClicks()
