@@ -45,7 +45,10 @@ class Notification extends Model
     public function getActionNameAttribute()
     {
         $actionList = $this->Action();
-        if (isset($actionList))
-            return $actionList->first()->name;
+        if (isset($actionList)) {
+            if ($this->action == 'collection')
+                return $actionList->first()->name;
+            return $actionList->first()->description;
+        }
     }
 }

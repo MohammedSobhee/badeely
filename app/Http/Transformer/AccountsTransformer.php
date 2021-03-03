@@ -27,7 +27,6 @@ class AccountsTransformer extends Transformer
 
         return [
             'id' => $item->id,
-            'status' => $item->status,
             'name' => $item->name,
             'account_name' => $item->description,
             'mobile' => $item->mobile,

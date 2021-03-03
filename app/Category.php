@@ -11,7 +11,8 @@ class Category extends Model
 
     public $timestamps = false;
     protected $guarded = [];
-    protected $appends = ['name', 'follow_num', 'is_follow', 'countries', 'status'];
+    protected $appends = ['name', 'follow_num', 'is_follow', 'countries'];
+
 
     public function image()
     {

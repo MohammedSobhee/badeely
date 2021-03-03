@@ -248,17 +248,17 @@
                                     </div>
                                 </div>
 
-                                {{--                                <div class="m-form__section m-form__section--first">--}}
-                                {{--                                    <div class="form-group m-form__group row">--}}
-                                {{--                                        <label class="col-2 col-form-label" for="insta_url">@lang('inputs.insta_url')--}}
-                                {{--                                            :</label>--}}
-                                {{--                                        <div class="col-10">--}}
-                                {{--                                            <input type="text" id="insta_url" class="form-control m-input"--}}
-                                {{--                                                   name="insta_url" value="{{ old('insta_url') }}"--}}
-                                {{--                                                   placeholder="http://instagram.com/username">--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
+{{--                                <div class="m-form__section m-form__section--first">--}}
+{{--                                    <div class="form-group m-form__group row">--}}
+{{--                                        <label class="col-2 col-form-label" for="insta_url">@lang('inputs.insta_url')--}}
+{{--                                            :</label>--}}
+{{--                                        <div class="col-10">--}}
+{{--                                            <input type="text" id="insta_url" class="form-control m-input"--}}
+{{--                                                   name="insta_url" value="{{ old('insta_url') }}"--}}
+{{--                                                   placeholder="http://instagram.com/username">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
                                         <label class="col-2 col-form-label"
@@ -338,25 +338,25 @@
                                     </div>
                                 </div>
 
-                                <div class="m-form__section m-form__section--first">
-                                    <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label"
-                                               for="sub_category">@lang('inputs.sub_category') :</label>
-                                        <div class="col-10">
-                                            <select id="sub_category" name="categories[]"
-                                                    class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
-                                                    multiple>
-                                                @foreach( $subCategories as $category)
-                                                    <option value="{{ $category->id }}"
-                                                            data-parent="{{ $category->parent->id ?? '' }}"
-                                                            {{ in_array($category->id,$accountCategories) ? 'selected' : '' }}>{{ $category->name }}
-                                                        - {{ $category->parent->name ?? '' }}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="sub_category-loader"></div>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                <div class="m-form__section m-form__section--first">--}}
+{{--                                    <div class="form-group m-form__group row">--}}
+{{--                                        <label class="col-2 col-form-label"--}}
+{{--                                               for="sub_category">@lang('inputs.sub_category') :</label>--}}
+{{--                                        <div class="col-10">--}}
+{{--                                            <select id="sub_category" name="categories[]"--}}
+{{--                                                    class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"--}}
+{{--                                                    multiple>--}}
+{{--                                                @foreach( $subCategories as $category)--}}
+{{--                                                    <option value="{{ $category->id }}"--}}
+{{--                                                            data-parent="{{ $category->parent->id ?? '' }}"--}}
+{{--                                                            {{ in_array($category->id,$accountCategories) ? 'selected' : '' }}>{{ $category->name }}--}}
+{{--                                                        - {{ $category->parent->name ?? '' }}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                            <div class="sub_category-loader"></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
@@ -504,6 +504,7 @@
 
     <script src="{{ url('assets/admin/plugin/tagsinput/tagsinput.js') }}"></script>
 
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
 
@@ -530,6 +531,7 @@ $('.bootstrap-tagsinput').sortable({
         $('#tags').trigger('keyup');
     }
 });
+
 $('#image_preview').sortable();
 $(document).ready(function () {
 

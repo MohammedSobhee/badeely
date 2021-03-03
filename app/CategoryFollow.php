@@ -9,4 +9,11 @@ class CategoryFollow extends Model
 {
     //
     use SoftDeletes;
+
+    protected $table = 'category_follows';
+
+    function User()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -14,25 +14,29 @@ class AccountsController extends Controller
 {
     public function index()
     {
-        $accounts = Account::published()->where('country_id', config('country'));
+        $accounts = Account::whereHas('categories', function ($q) {
+            $q->where('categories.status', 1);
+        })->published()->where('country_id', config('country'));
 
         if (request('name')) {
 
-            $searchValues = explode(' ', request('name'));
+//            $searchValues = explode(' ', request('name'));
+
 
             $accounts = $accounts->whereHas('translates', function ($q) {
                 $q->where('name', 'like', '%' . request('name') . '%');
-            })->orWhere(function ($query) use ($searchValues) {
-
-                foreach ($searchValues as $key => $value) {
-                    // first key == 0
-                    if (!$key) {
-                        $query->where('app_tags', 'like', "%{$value}%");
-                    }
-                    $query->orWhere('app_tags', 'like', "%{$value}%");
-                }
-
             });
+//                ->orWhere(function ($query) use ($searchValues) {
+//
+//                foreach ($searchValues as $key => $value) {
+//                    // first key == 0
+//                    if (!$key) {
+//                        $query->where('app_tags', 'like', "%{$value}%");
+//                    }
+//                    $query->orWhere('app_tags', 'like', "%{$value}%");
+//                }
+//
+//            });
 
             // ->orWhere('tags', 'like', '%' . request('name') . '%');
 
@@ -85,6 +89,7 @@ class AccountsController extends Controller
 
         }
 
+
         if (request('sort_by')) {
             $accounts = $accounts->sortBy(request('sort_by'));
         }
@@ -96,7 +101,6 @@ class AccountsController extends Controller
         });
 
         $data = $this->transformer(new AccountsTransformer(), $accounts)->collection();
-
 
         return $this->success($data)
             ->pagination($accounts);
@@ -160,7 +164,7 @@ class AccountsController extends Controller
         $account = $this->transformer(new AccountsTransformer(), $account)->one();
 
         return $this->success($account)
-            ->created('success');
+            ->created('successfully_sent');
 
     }
 
@@ -213,6 +217,7 @@ class AccountsController extends Controller
         return $this->success($account)->custom('successfully_sent');
     }
 
+
     public function addView($id)
     {
         $account = Account::published()->find($id);
@@ -245,7 +250,7 @@ class AccountsController extends Controller
     public function getAccountsByTag(Request $request)
     {
 
-        $accounts = Account::where('tags', 'LIKE', '%' . $request->get('tag') . '%')->where('status',1)->paginate(20);
+        $accounts = Account::where('tags', 'LIKE', '%' . $request->get('tag') . '%')->where('status', 1)->paginate(20);
         $data = $this->transformer(new AccountsTransformer(), $accounts)->collection();
 
         return $this->success($data)

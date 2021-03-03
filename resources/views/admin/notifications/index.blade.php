@@ -48,9 +48,18 @@
                                       action="{{ route('admin.notifications.send') }}">
                                     {{ csrf_field() }}
                                     <div class="modal-body">
+
                                         <div class="form-group">
-                                            <label for="title" class="col-form-label">@lang('inputs.title') :</label>
-                                            <input type="text" class="form-control" name="title" id="title" required>
+                                            <label for="title"
+                                                   class="col-form-label">@lang('inputs.countries_collection') :</label>
+
+                                            <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
+                                                    name="country_id" id="country_id" required>
+                                                <option value=""></option>
+                                                @foreach($countries as $country)
+                                                    <option value="{{$country->id}}">{{$country->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="title"
@@ -59,13 +68,13 @@
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     name="followers_collection" id="followers_collection">
                                                 <option value="">@lang('inputs.all')</option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                                @endforeach
+                                                {{--                                                @foreach($categories as $category)--}}
+                                                {{--                                                    <option value="{{$category->id}}">{{$category->name}}</option>--}}
+                                                {{--                                                @endforeach--}}
                                             </select>
                                         </div>
 
-                                        <div class="form-group actions" style="display: none">
+                                        <div class="form-group actions">
                                             <label for="title"
                                                    class="col-form-label">@lang('inputs.notification_action_type')
                                                 :</label>
@@ -73,12 +82,13 @@
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     name="action" id="action">
                                                 <option value=""></option>
+                                                <option value="general">@lang('inputs.general')</option>
                                                 <option value="account">@lang('inputs.account')</option>
                                                 <option value="collection">@lang('inputs.collection')</option>
                                             </select>
                                         </div>
 
-                                        <div class="form-group actions" style="display: none">
+                                        <div class="form-group actions">
                                             <label for="title"
                                                    class="col-form-label">@lang('inputs.items') :</label>
 
@@ -86,6 +96,10 @@
                                                     name="action_id" id="action_id">
 
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title" class="col-form-label">@lang('inputs.title') :</label>
+                                            <input type="text" class="form-control" name="title" id="title" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="content" class="col-form-label">@lang('inputs.content')
@@ -126,6 +140,8 @@
                         </tr>
                         </thead>
                         <tbody class="m-datatable__body" style="">
+
+
                         @foreach( $notifications as $notification )
                             <tr>
                                 <th scope="row">{{ $notification->id }}</th>
@@ -134,7 +150,7 @@
                                 <td>{{ $notification->category }}</td>
                                 <td>{{ ucfirst($notification->action) }}</td>
                                 <td>{{ $notification->action_name }}</td>
-                                <td>{{ $notification->created_at->format('d/m/Y - h:i A') }}</td>
+                                <td>{{ $notification->created_at->format('d/m/Y - h:i A')}}</td>
                                 <td>
 
                                     @can('admin.notifications.destroy')

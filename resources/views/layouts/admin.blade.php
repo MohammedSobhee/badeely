@@ -410,18 +410,56 @@
 
     $('.validation-form').parsley();
 
-    $(document).on('change', '#followers_collection', function () {
+
+    $(document).on('change', '#country_id', function () {
         var selection = $(this).val();
         if (selection == '') {
-            $('.actions').hide();
-        } else {
-            $('.actions').show();
-
+            $('#followers_collection').html('<option value="">@lang('inputs.all')</option>').trigger("change");
+            $('#followers_collection').selectpicker('refresh');
+            return;
         }
+        //     $('.actions').hide();
+        // } else {
+        //     $('.actions').show();
+        //
+        // }
+
+        $('#action').trigger("change");
+        $('#action').selectpicker('refresh');
+        // if ($('#action').val() == 'account')
+        $.ajax({
+            url: '{{url('admin/categories/')}}/' + selection,
+            type: 'GET',
+
+            success: function (data) {
+                $('#followers_collection').html(data).trigger("change");
+                $('#followers_collection').selectpicker('refresh');
+
+            }
+        })
+    });
+    $(document).on('change', '#followers_collection', function () {
+        var selection = $(this).val();
+        // if (selection == '') {
+        //     $('.actions').hide();
+        // } else {
+        //     $('.actions').show();
+        //
+        // }
+
+        var _country_id = $('#country_id').val();
+
+        if (_country_id == '' || _country_id == null) {
+            return;
+        }
+
+        $('#action').trigger("change");
+        $('#action').selectpicker('refresh');
+
 
         if ($('#action').val() == 'account')
             $.ajax({
-                url: '{{url('admin/items/')}}/' + 'account' + '/' + selection,
+                url: '{{url('admin/items/')}}/' + _country_id + '/account' + '/' + selection,
                 type: 'GET',
 
                 success: function (data) {
@@ -486,11 +524,16 @@
 
     }
 
-
     $(document).on('change', '#action', function () {
 
+        var _country_id = $('#country_id').val();
+
+        if (_country_id == '' || _country_id == null) {
+            return;
+        }
+
         $.ajax({
-            url: '{{url('admin/items/')}}/' + $(this).val() + '/' + $('#followers_collection').val(),
+            url: '{{url('admin/items/')}}/' + _country_id + '/' + $(this).val() + '/' + $('#followers_collection').val(),
             type: 'GET',
 
             success: function (data) {

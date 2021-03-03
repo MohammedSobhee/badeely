@@ -10,6 +10,7 @@ use App\User;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
+use LaravelFCM\Message\Topics;
 
 
 class FCM
@@ -17,7 +18,7 @@ class FCM
     #API access key from Google API's Console
     private $key = 'AAAA3PZSqLQ:APA91bFMvteUjfd7d5yFJ1tLmq2D6xAwOWkDijw9jX93ezpQTwvtFQ95f-291DJwfSneKqgMa2gJpQDgsIIyM8DEySESGM9mguWu6e3UDISuHS8J_dvF8w3gS8To8ueIYcVkrViHB_xd';
 
-    public function send($title, $body,$data)
+    public function send($title, $body, $data = null)
     {
         $msg = [
             'body' => $body,
@@ -31,7 +32,6 @@ class FCM
             'to' => '/topics/BadeelyNotifications',
             'notification' => $msg,
         ];
-
 
 
 //        $fields = [
@@ -55,17 +55,22 @@ class FCM
         $result = curl_exec($ch);
         curl_close($ch);
 
+
         return $result;
     }
 
     private $devices_id;
 
 
-    public function sendNotification($receiver_id, $title, $content) //$object
+    public function sendNotification($receiver_id, $title, $content, $type = null) //$object
     {
+        if (!isset($type)) {
+
+        }
         $user = User::find($receiver_id);
         $this->FCM('Badeely', $title, $content, $user);
     }
+
 
     public function FCM($title, $body, $data, $user)
     {
@@ -81,9 +86,9 @@ class FCM
 
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();
-        $data = $dataBuilder->build();
+        $dataT = $dataBuilder->build();
 
-        $downstreamResponse = \LaravelFCM\Facades\FCM::sendTo('drWwxSApU_E:APA91bHZJ9Ql9L3djXTVb5yHQVgEmme2BCKc-VBJQwN7EmITNFomEsEQUIErdydFHeJKRcmxMwbRjLMWpF-N4KA6nJXhe_u_XztzG5EUewiGkvuYeX-8GW7g8A5XvPoA2Dd7zln6dRCP', $option, $notification, null);
+        $downstreamResponse = \LaravelFCM\Facades\FCM::sendTo($user->device_token, $option, $notification, $dataT);
 
 
         //return Array - you must remove all this tokens in your database
@@ -104,10 +109,6 @@ class FCM
             'numberFailure' => $downstreamResponse->numberFailure(),
             'numberModification' => $downstreamResponse->numberModification(),
         ];
-
-        if ($user->id == 14) {
-            dd($object);
-        }
         return $object;
     }
 

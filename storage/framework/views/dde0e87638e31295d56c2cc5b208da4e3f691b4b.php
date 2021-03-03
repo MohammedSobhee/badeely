@@ -48,9 +48,18 @@
                                     <?php echo e(csrf_field()); ?>
 
                                     <div class="modal-body">
+
                                         <div class="form-group">
-                                            <label for="title" class="col-form-label"><?php echo app('translator')->getFromJson('inputs.title'); ?> :</label>
-                                            <input type="text" class="form-control" name="title" id="title" required>
+                                            <label for="title"
+                                                   class="col-form-label"><?php echo app('translator')->getFromJson('inputs.countries_collection'); ?> :</label>
+
+                                            <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
+                                                    name="country_id" id="country_id" required>
+                                                <option value=""></option>
+                                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($country->id); ?>"><?php echo e($country->name); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="title"
@@ -59,13 +68,13 @@
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     name="followers_collection" id="followers_collection">
                                                 <option value=""><?php echo app('translator')->getFromJson('inputs.all'); ?></option>
-                                                <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($category->id); ?>"><?php echo e($category->name); ?></option>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                
+                                                
+                                                
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group actions">
                                             <label for="title"
                                                    class="col-form-label"><?php echo app('translator')->getFromJson('inputs.notification_action_type'); ?>
                                                 :</label>
@@ -73,12 +82,13 @@
                                             <select class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
                                                     name="action" id="action">
                                                 <option value=""></option>
+                                                <option value="general"><?php echo app('translator')->getFromJson('inputs.general'); ?></option>
                                                 <option value="account"><?php echo app('translator')->getFromJson('inputs.account'); ?></option>
                                                 <option value="collection"><?php echo app('translator')->getFromJson('inputs.collection'); ?></option>
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group actions">
                                             <label for="title"
                                                    class="col-form-label"><?php echo app('translator')->getFromJson('inputs.items'); ?> :</label>
 
@@ -86,6 +96,10 @@
                                                     name="action_id" id="action_id">
 
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title" class="col-form-label"><?php echo app('translator')->getFromJson('inputs.title'); ?> :</label>
+                                            <input type="text" class="form-control" name="title" id="title" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="content" class="col-form-label"><?php echo app('translator')->getFromJson('inputs.content'); ?>
@@ -126,6 +140,8 @@
                         </tr>
                         </thead>
                         <tbody class="m-datatable__body" style="">
+
+
                         <?php $__currentLoopData = $notifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <th scope="row"><?php echo e($notification->id); ?></th>

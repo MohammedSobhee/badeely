@@ -263,18 +263,18 @@
                                     </div>
                                 </div>
 
-                                <div class="m-form__section m-form__section--first">
-                                    <div class="form-group m-form__group row">
-                                        <label class="col-2 col-form-label"
-                                               for="sub_category">@lang('inputs.sub_category') :</label>
-                                        <div class="col-10">
-                                            <select id="sub_category" name="categories[]"
-                                                    class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"
-                                                    multiple></select>
-                                            <div class="sub_category-loader"></div>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                <div class="m-form__section m-form__section--first">--}}
+{{--                                    <div class="form-group m-form__group row">--}}
+{{--                                        <label class="col-2 col-form-label"--}}
+{{--                                               for="sub_category">@lang('inputs.sub_category') :</label>--}}
+{{--                                        <div class="col-10">--}}
+{{--                                            <select id="sub_category" name="categories[]"--}}
+{{--                                                    class="form-control m-bootstrap-select m-bootstrap-select--solid m_form_type"--}}
+{{--                                                    multiple></select>--}}
+{{--                                            <div class="sub_category-loader"></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="m-form__section m-form__section--first">
                                     <div class="form-group m-form__group row">
@@ -401,7 +401,6 @@
 
     <script src="{{ url('assets/admin/plugin/tagsinput/tagsinput.js') }}"></script>
 
-
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
 
@@ -428,6 +427,7 @@ $('.bootstrap-tagsinput').sortable({
         $('#tags').trigger('keyup');
     }
 });
+
 $('#image_preview').sortable();
 $(document).ready(function () {
 

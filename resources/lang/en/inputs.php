@@ -41,6 +41,8 @@ return array(
     'code' => 'Country Code',
     'call_key' => 'Call Key',
 
+    'countries_collection' => 'Country',
+    'general' => 'General',
     'website_name' => 'App Name',
     'website_description' => 'About App',
 

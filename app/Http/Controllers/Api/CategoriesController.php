@@ -22,6 +22,7 @@ class CategoriesController extends Controller
                 $q->where('id', config('country'));
             })->where('status', 1)->get();
 
+
         $all_categories = $this->transformer(new CategoriesTransformer(), $all_categories)->collection();
 
         $my_follow_categories = [];
@@ -110,6 +111,7 @@ class CategoriesController extends Controller
 
         return $this->success($category)->custom('successfully_sent');
     }
+
 
     public function accounts($id)
     {

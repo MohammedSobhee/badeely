@@ -41,6 +41,8 @@ return [
     'code' => 'كود الدولة',
     'call_key' => 'كود الاتصال',
 
+    'countries_collection' => 'الدولة',
+    'general' => 'عام',
     'website_name' => 'اسم التطبيق',
     'website_description' => 'عن التطبيق (من نحن)',
 

@@ -112,6 +112,7 @@ class CategoriesController extends Controller
         $data['status'] = request()->has('status') ?: 0;
 
         $category->update($data);
+
         $category->touchTranslation(request('category_labels'));
 
         $category->countries()->sync(request('countries'));

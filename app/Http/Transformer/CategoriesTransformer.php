@@ -15,7 +15,6 @@ class CategoriesTransformer extends Transformer
             'children_count' => $item->children()->count(),
             'follow_num' => $item->follow_num,
             'is_follow' => $item->is_follow,
-            'status' => $item->status,
 
 //            'sub_categories' => $this->includeMany(new CategoriesTransformer(),$item->children)
         ];
